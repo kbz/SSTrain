@@ -1,0 +1,255 @@
+
+textures.pack.png
+size: 512,512
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+acc_mark
+  rotate: false
+  xy: 506, 208
+  size: 1, 50
+  orig: 1, 50
+  offset: 0, 0
+  index: -1
+circle
+  rotate: false
+  xy: 2, 2
+  size: 250, 250
+  orig: 250, 250
+  offset: 0, 0
+  index: -1
+circle_sim
+  rotate: false
+  xy: 260, 260
+  size: 250, 250
+  orig: 250, 250
+  offset: 0, 0
+  index: -1
+circle_swipe_left
+  rotate: false
+  xy: 254, 2
+  size: 250, 250
+  orig: 250, 250
+  offset: 0, 0
+  index: -1
+hold_background
+  rotate: false
+  xy: 2, 254
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1
+selection_menu_background
+  rotate: false
+  xy: 509, 208
+  size: 1, 50
+  orig: 1, 50
+  offset: 0, 0
+  index: -1
+selection_menu_selected
+  rotate: false
+  xy: 506, 156
+  size: 1, 50
+  orig: 1, 50
+  offset: 0, 0
+  index: -1
+
+textures.pack2.png
+size: 512,512
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+circle_swipe_left_sim
+  rotate: false
+  xy: 2, 254
+  size: 250, 250
+  orig: 250, 250
+  offset: 0, 0
+  index: -1
+circle_swipe_right
+  rotate: false
+  xy: 2, 2
+  size: 250, 250
+  orig: 250, 250
+  offset: 0, 0
+  index: -1
+circle_swipe_right_sim
+  rotate: false
+  xy: 254, 254
+  size: 250, 250
+  orig: 250, 250
+  offset: 0, 0
+  index: -1
+tap
+  rotate: false
+  xy: 254, 2
+  size: 250, 250
+  orig: 250, 250
+  offset: 0, 0
+  index: -1
+
+textures.pack3.png
+size: 512,512
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+acc_bad
+  rotate: false
+  xy: 324, 452
+  size: 50, 50
+  orig: 50, 50
+  offset: 0, 0
+  index: -1
+acc_good
+  rotate: false
+  xy: 376, 452
+  size: 50, 50
+  orig: 50, 50
+  offset: 0, 0
+  index: -1
+acc_great
+  rotate: false
+  xy: 428, 452
+  size: 50, 50
+  orig: 50, 50
+  offset: 0, 0
+  index: -1
+acc_perfect
+  rotate: false
+  xy: 419, 62
+  size: 50, 50
+  orig: 50, 50
+  offset: 0, 0
+  index: -1
+bad_late
+  rotate: false
+  xy: 324, 420
+  size: 65, 30
+  orig: 65, 30
+  offset: 0, 0
+  index: -1
+bad_soon
+  rotate: false
+  xy: 439, 388
+  size: 65, 30
+  orig: 65, 30
+  offset: 0, 0
+  index: -1
+good_late
+  rotate: false
+  xy: 324, 83
+  size: 93, 30
+  orig: 93, 30
+  offset: 0, 0
+  index: -1
+good_soon
+  rotate: false
+  xy: 324, 51
+  size: 93, 30
+  orig: 93, 30
+  offset: 0, 0
+  index: -1
+great_late
+  rotate: false
+  xy: 324, 388
+  size: 113, 30
+  orig: 113, 30
+  offset: 0, 0
+  index: -1
+great_soon
+  rotate: false
+  xy: 391, 420
+  size: 113, 30
+  orig: 113, 30
+  offset: 0, 0
+  index: -1
+knob
+  rotate: false
+  xy: 480, 482
+  size: 20, 20
+  orig: 20, 20
+  offset: 0, 0
+  index: -1
+knob_after
+  rotate: false
+  xy: 480, 460
+  size: 20, 20
+  orig: 20, 20
+  offset: 0, 0
+  index: -1
+knob_before
+  rotate: false
+  xy: 484, 114
+  size: 20, 20
+  orig: 20, 20
+  offset: 0, 0
+  index: -1
+menu_item_down
+  rotate: false
+  xy: 2, 402
+  size: 320, 100
+  orig: 320, 100
+  offset: 0, 0
+  index: -1
+menu_item_idle
+  rotate: false
+  xy: 2, 34
+  size: 320, 100
+  orig: 320, 100
+  offset: 0, 0
+  index: -1
+miss
+  rotate: false
+  xy: 419, 41
+  size: 90, 19
+  orig: 90, 19
+  offset: 0, 0
+  index: -1
+nice_late
+  rotate: false
+  xy: 324, 19
+  size: 93, 30
+  orig: 93, 30
+  offset: 0, 0
+  index: -1
+nice_soon
+  rotate: false
+  xy: 2, 2
+  size: 93, 30
+  orig: 93, 30
+  offset: 0, 0
+  index: -1
+perfect
+  rotate: false
+  xy: 324, 115
+  size: 158, 19
+  orig: 158, 19
+  offset: 0, 0
+  index: -1
+tap_pressed
+  rotate: false
+  xy: 2, 150
+  size: 250, 250
+  orig: 250, 250
+  offset: 0, 0
+  index: -1
+tap_warn
+  rotate: false
+  xy: 254, 136
+  size: 250, 250
+  orig: 250, 250
+  offset: 0, 0
+  index: -1
+
+textures.pack4.png
+size: 64,64
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+song_selection_menu_background
+  rotate: false
+  xy: 2, 2
+  size: 50, 50
+  orig: 50, 50
+  offset: 0, 0
+  index: -1
