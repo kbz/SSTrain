@@ -34,7 +34,7 @@ public class ResultsScreen implements Screen {
     private Label unstableRatingValueLabel;
     private Label badLabel = new Label("Bad:", Assets.menuSkin, "song_style_result_values");
     private Label badResultLabel;
-    private Label goodLabel = new Label("Good:", Assets.menuSkin, "song_style_result_values");
+    private Label goodLabel = new Label("Nice:", Assets.menuSkin, "song_style_result_values");
     private Label goodResultLabel;
     private Label greatLabel = new Label("Great", Assets.menuSkin, "song_style_result_values");
     private Label greatResultLabel;
