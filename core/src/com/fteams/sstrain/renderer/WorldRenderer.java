@@ -162,24 +162,24 @@ public class WorldRenderer {
     }
 
     private void drawAccuracyBar() {
-        float centerX = this.positionOffsetX + width / 6;
+        float centerX = this.positionOffsetX + width / 2;
         float y = this.positionOffsetY + height - height * 0.1f;
-        float zone = (float) (SongUtils.getSpeedFromConfig(GlobalConfiguration.noteSpeed) / 2000.0);
+        float zone = 400f/2000f; // the zone = 400 ms of range
 
         // draw the background (bad level)
         spriteBatch.draw(accBadBackground, centerX - width / 6f, y, width / 3f, height * 0.01f);
         // draw the background (good level)
-        spriteBatch.draw(accGoodBackground, centerX - 0.4f * width / 6f, y, 0.4f * width / 3f, height * 0.01f);
+        spriteBatch.draw(accGoodBackground, centerX - 0.9f * width / 6f, y, 0.9f * width / 3f, height * 0.01f);
         // draw the background (great level)
-        spriteBatch.draw(accGreatBackground, centerX - 0.3f * width / 6f, y, 0.3f * width / 3f, height * 0.01f);
+        spriteBatch.draw(accGreatBackground, centerX - 0.55f * width / 6f, y, 0.55f * width / 3f, height * 0.01f);
         // draw the background (perfect level)
-        spriteBatch.draw(accPerfectBackground, centerX - 0.1f * width / 6f, y, 0.1f * width / 3f, height * 0.01f);
+        spriteBatch.draw(accPerfectBackground, centerX - 0.40f * width / 6f, y, 0.40f * width / 3f, height * 0.01f);
         // draw each of the 'markers'
         for (AccuracyMarker accMarker : world.getAccuracyMarkers()) {
             if (accMarker.display) {
 
                 spriteBatch.setColor(1, 1, 1, accMarker.getAlpha());
-                spriteBatch.draw(accHitMark, centerX + (accMarker.getTime()) * (width / 6) / zone - accHitMark.getRegionWidth(), y - height * 0.01f, 3f, height * 0.03f);
+                spriteBatch.draw(accHitMark, centerX + (accMarker.getTime()) * (width / 6f) / zone - accHitMark.getRegionWidth(), y - height * 0.01f, 3f, height * 0.03f);
             }
         }
         spriteBatch.setColor(1, 1, 1, 1);

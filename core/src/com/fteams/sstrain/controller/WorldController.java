@@ -353,18 +353,35 @@ public class WorldController implements Music.OnCompletionListener {
         }
     }
 
-    private void playSoundForAccuracy(Accuracy accuracy) {
+    private void playTapSoundForAccuracy(Accuracy accuracy) {
         if (accuracy == Accuracy.PERFECT) {
-            Assets.perfectSound.play(GlobalConfiguration.feedbackVolume / 100f);
+            Assets.perfectTapSound.play(GlobalConfiguration.feedbackVolume / 100f);
         }
         if (accuracy == Accuracy.GREAT) {
-            Assets.greatSound.play(GlobalConfiguration.feedbackVolume / 100f);
+            Assets.greatTapSound.play(GlobalConfiguration.feedbackVolume / 100f);
         }
         if (accuracy == Accuracy.NICE) {
-            Assets.niceSound.play(GlobalConfiguration.feedbackVolume / 100f);
+            Assets.niceTapSound.play(GlobalConfiguration.feedbackVolume / 100f);
         }
+        // bad shares sound with nice
         if (accuracy == Accuracy.BAD) {
-            Assets.badSound.play(GlobalConfiguration.feedbackVolume / 100f);
+            Assets.niceTapSound.play(GlobalConfiguration.feedbackVolume / 100f);
+        }
+    }
+
+    private void playSwipeSoundForAccuracy(Accuracy accuracy) {
+        if (accuracy == Accuracy.PERFECT) {
+            Assets.perfectSwipeSound.play(GlobalConfiguration.feedbackVolume / 100f);
+        }
+        if (accuracy == Accuracy.GREAT) {
+            Assets.greatSwipeSound.play(GlobalConfiguration.feedbackVolume / 100f);
+        }
+        if (accuracy == Accuracy.NICE) {
+            Assets.niceSwipeSound.play(GlobalConfiguration.feedbackVolume / 100f);
+        }
+        // bad shares sound with nice
+        if (accuracy == Accuracy.BAD) {
+            Assets.niceSwipeSound.play(GlobalConfiguration.feedbackVolume / 100f);
         }
     }
 
@@ -457,7 +474,7 @@ public class WorldController implements Music.OnCompletionListener {
                 if (accuracy == Accuracy.NONE)
                     continue;
 
-                playSoundForAccuracy(accuracy);
+                playTapSoundForAccuracy(accuracy);
                 processAccuracy(accuracy, null, false);
 
                 accuracyPopups.add(new AccuracyPopup(accuracy, mark.hitTime < 0));
@@ -486,7 +503,7 @@ public class WorldController implements Music.OnCompletionListener {
                 if (accuracy == Accuracy.NONE)
                     continue;
                 if (accuracy != Accuracy.MISS) {
-                    playSoundForAccuracy(accuracy);
+                    playTapSoundForAccuracy(accuracy);
                 }
                 accuracyPopups.add(new AccuracyPopup(accuracy, mark.hitTime < 0));
                 processAccuracy(mark.accuracy, null, false);
@@ -515,8 +532,7 @@ public class WorldController implements Music.OnCompletionListener {
         if (done && !hasMusic) {
             this.onCompletion(null);
         }
-        if (time > Assets.selectedBeatmap.metadata.duration)
-        {
+        if (time > Assets.selectedBeatmap.metadata.duration) {
             if (!hasMusic)
                 this.onCompletion(null);
         }
@@ -609,7 +625,7 @@ public class WorldController implements Music.OnCompletionListener {
                     if (accuracy == Accuracy.NONE)
                         continue;
 
-                    playSoundForAccuracy(accuracy);
+                    playSwipeSoundForAccuracy(accuracy);
                     processAccuracy(accuracy, null, false);
 
                     accuracyPopups.add(new AccuracyPopup(accuracy, mark.hitTime < 0));
@@ -634,7 +650,7 @@ public class WorldController implements Music.OnCompletionListener {
                     if (accuracy == Accuracy.NONE)
                         continue;
 
-                    playSoundForAccuracy(accuracy);
+                    playSwipeSoundForAccuracy(accuracy);
                     processAccuracy(accuracy, null, false);
 
                     accuracyPopups.add(new AccuracyPopup(accuracy, mark.hitTime < 0));

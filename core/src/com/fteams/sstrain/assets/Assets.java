@@ -37,10 +37,12 @@ public class Assets {
     public static TextureAtlas atlas;
 
     public static Skin menuSkin;
-    public static Sound badSound;
-    public static Sound niceSound;
-    public static Sound greatSound;
-    public static Sound perfectSound;
+    public static Sound niceTapSound;
+    public static Sound greatTapSound;
+    public static Sound perfectTapSound;
+    public static Sound niceSwipeSound;
+    public static Sound greatSwipeSound;
+    public static Sound perfectSwipeSound;
 
     public static BitmapFont font;
 
@@ -56,10 +58,12 @@ public class Assets {
     //     TextureAtlas, TiledAtlas, TiledMapRenderer, Music and Sound.
     public static void queueLoading() {
         internalManager.load("textures/textures.pack.atlas", TextureAtlas.class);
-        internalManager.load("hitsounds/bad.mp3", Sound.class);
-        internalManager.load("hitsounds/good.mp3", Sound.class);
-        internalManager.load("hitsounds/great.mp3", Sound.class);
-        internalManager.load("hitsounds/perfect.mp3", Sound.class);
+        internalManager.load("hitsounds/tap_nice.ogg", Sound.class);
+        internalManager.load("hitsounds/tap_great.ogg", Sound.class);
+        internalManager.load("hitsounds/tap_perfect.ogg", Sound.class);
+        internalManager.load("hitsounds/swipe_nice.ogg", Sound.class);
+        internalManager.load("hitsounds/swipe_great.ogg", Sound.class);
+        internalManager.load("hitsounds/swipe_perfect.ogg", Sound.class);
         internalManager.load("bigimages/main_menu_background.jpg", Texture.class);
         internalManager.load("images/hold_background.png", Texture.class);
         internalManager.load("fonts/song-font.fnt", BitmapFont.class);
@@ -120,14 +124,18 @@ public class Assets {
     }
 
     public static void setHitsounds() {
-        if (badSound == null)
-            badSound = internalManager.get("hitsounds/bad.mp3");
-        if (niceSound == null)
-            niceSound = internalManager.get("hitsounds/good.mp3");
-        if (greatSound == null)
-            greatSound = internalManager.get("hitsounds/great.mp3");
-        if (perfectSound == null)
-            perfectSound = internalManager.get("hitsounds/perfect.mp3");
+        if (niceTapSound == null)
+            niceTapSound = internalManager.get("hitsounds/tap_nice.ogg");
+        if (greatTapSound == null)
+            greatTapSound = internalManager.get("hitsounds/tap_great.ogg");
+        if (perfectTapSound == null)
+            perfectTapSound = internalManager.get("hitsounds/tap_perfect.ogg");
+        if (niceSwipeSound == null)
+            niceSwipeSound = internalManager.get("hitsounds/swipe_nice.ogg");
+        if (greatSwipeSound == null)
+            greatSwipeSound = internalManager.get("hitsounds/swipe_great.ogg");
+        if (perfectSwipeSound == null)
+            perfectSwipeSound = internalManager.get("hitsounds/swipe_perfect.ogg");
     }
 
     @SuppressWarnings("unchecked")

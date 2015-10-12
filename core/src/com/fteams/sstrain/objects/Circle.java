@@ -106,7 +106,14 @@ public class Circle implements Comparable<Circle> {
 
         if (visible && despawnTime <= time) {
             if (GlobalConfiguration.playHintSounds && !soundPlayed) {
-                Assets.perfectSound.play(GlobalConfiguration.feedbackVolume / 200f);
+                // hint sounds play at 50% of the volume
+                if (note.status.equals(SongUtils.NOTE_NO_SWIPE))
+                {
+                    Assets.perfectTapSound.play(GlobalConfiguration.feedbackVolume / 200f);
+                } else
+                {
+                    Assets.perfectSwipeSound.play(GlobalConfiguration.feedbackVolume / 200f);
+                }
                 soundPlayed = true;
             }
 
@@ -151,14 +158,20 @@ public class Circle implements Comparable<Circle> {
             miss = true;
             accuracy = Accuracy.MISS;
 //            System.out.println("MISS-002: didn't hit the note (" + note.id + ")");
+        } else if (nextNote != null && !hold && endWaitTime <= time && accuracy == null && !miss)
+        {
+            waiting = false;
+            miss = true;
+            accuracy = Accuracy.MISS;
+//            System.out.println("MISS-003: didn't hit the note (" + note.id + ")");
         }
         if (hold && !miss) {
             // miss if we hold for too long
-            if (nextNote != null && nextNote.endWaitTime <= time && nextNote.accuracy == null && !miss) {
+            if (nextNote != null && nextNote.endWaitTime <= time && nextNote.accuracy == null) {
                 miss = true;
                 holding = false;
                 waiting = false;
-//                System.out.println("MISS-003: held for too long (" + note.id + ")");
+//                System.out.println("MISS-004: held for too long (" + note.id + ")");
                 accuracy = Accuracy.MISS;
             }
         }
@@ -171,7 +184,7 @@ public class Circle implements Comparable<Circle> {
         if (previousNote != null && previousNote.hold)
             return Accuracy.NONE;
 
-        Accuracy accuracy = Results.getAccuracyFor(previousTime - despawnTime - GlobalConfiguration.inputOffset / 1000f, speed);
+        Accuracy accuracy = Results.getAccuracyFor(previousTime - despawnTime - GlobalConfiguration.inputOffset / 1000f);
         // If the note was tapped too early, we ignore the tap
         if (despawnTime > previousTime && accuracy == Accuracy.MISS) {
             return Accuracy.NONE;
@@ -190,7 +203,7 @@ public class Circle implements Comparable<Circle> {
     public Accuracy release() {
 //        System.out.println("R>" + note.id);
         // if a non-hold is released it it counts as a miss.
-        if (!hold)
+        if (!hold || !note.status.equals(SongUtils.NOTE_NO_SWIPE))
         {
             accuracy = Accuracy.MISS;
             miss = true;
@@ -208,7 +221,7 @@ public class Circle implements Comparable<Circle> {
         if (nextNote != null)
             return Accuracy.NONE;
 
-        accuracy = Results.getAccuracyFor(previousTime - despawnTime - GlobalConfiguration.inputOffset / 1000f, speed);
+        accuracy = Results.getAccuracyFor(previousTime - despawnTime - GlobalConfiguration.inputOffset / 1000f);
         previousNote.release();
         waiting = false;
         // miss if we release before we start waiting
@@ -216,13 +229,14 @@ public class Circle implements Comparable<Circle> {
             waiting = false;
             visible = false;
             miss = true;
-//            System.out.println("MISS-004: released hold too early (" + note.id + ")");
+//            System.out.println("MISS-005: released hold too early (" + note.id + ")");
         }
         return accuracy;
     }
 
     public Accuracy swipeLeft() {
-        if (note.type.equals(SongUtils.NOTE_TYPE_HOLD ) || note.status.equals(SongUtils.NOTE_NO_SWIPE)  || note.status.equals(SongUtils.NOTE_SWIPE_RIGHT))
+        // some songs have notes with type 2 and status != 0
+        if ( note.status.equals(SongUtils.NOTE_NO_SWIPE)  || note.status.equals(SongUtils.NOTE_SWIPE_RIGHT))
         {
             return Accuracy.NONE;
         }
@@ -231,24 +245,22 @@ public class Circle implements Comparable<Circle> {
             previousNote.release();
         }
 
-        Accuracy accuracy = Results.getAccuracyFor(previousTime - despawnTime - GlobalConfiguration.inputOffset / 1000f, speed);
+        Accuracy accuracy = Results.getAccuracyFor(previousTime - despawnTime - GlobalConfiguration.inputOffset / 1000f);
         // If the note was tapped too early, we ignore the tap
         if (despawnTime > previousTime && accuracy == Accuracy.MISS) {
             return Accuracy.NONE;
         }
         hitTime = previousTime - despawnTime - GlobalConfiguration.inputOffset / 1000f;
         waiting = false;
-        if (hold) {
-            holding = true;
-        } else {
-            visible = false;
-        }
         this.accuracy = accuracy;
+        visible = false;
         return accuracy;
     }
 
     public Accuracy swipeRight() {
-        if (note.type.equals(SongUtils.NOTE_TYPE_HOLD ) || note.status.equals(SongUtils.NOTE_NO_SWIPE)  || note.status.equals(SongUtils.NOTE_SWIPE_LEFT))
+        // some songs have notes with type 2 and status != 0
+        // legne on pro, for instance.
+        if ( note.status.equals(SongUtils.NOTE_NO_SWIPE)  || note.status.equals(SongUtils.NOTE_SWIPE_LEFT))
         {
             return Accuracy.NONE;
         }
@@ -257,19 +269,15 @@ public class Circle implements Comparable<Circle> {
             previousNote.release();
         }
 
-        Accuracy accuracy = Results.getAccuracyFor(previousTime - despawnTime - GlobalConfiguration.inputOffset / 1000f, speed);
+        Accuracy accuracy = Results.getAccuracyFor(previousTime - despawnTime - GlobalConfiguration.inputOffset / 1000f);
         // If the note was tapped too early, we ignore the tap
         if (despawnTime > previousTime && accuracy == Accuracy.MISS) {
             return Accuracy.NONE;
         }
         hitTime = previousTime - despawnTime - GlobalConfiguration.inputOffset / 1000f;
         waiting = false;
-        if (hold) {
-            holding = true;
-        } else {
-            visible = false;
-        }
         this.accuracy = accuracy;
+        visible = false;
         return accuracy;
     }
 
@@ -283,6 +291,10 @@ public class Circle implements Comparable<Circle> {
             return 1;
 
         return Long.compare(note.id, o.note.id);
+    }
+
+    public void updateWaitTime(Double timing) {
+        this.startWaitTime = timing.floatValue();
     }
 }
 

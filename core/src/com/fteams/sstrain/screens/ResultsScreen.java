@@ -22,7 +22,7 @@ public class ResultsScreen implements Screen {
     private Texture texture = Assets.mainMenuBackgroundTexture;
     private Image splashImage = new Image(texture);
     private Table table = new Table();
-    private Label approachRateLabel = new Label("Avg. Accuracy:", Assets.menuSkin, "song_style_result_values");
+    private Label approachRateLabel = new Label("Note Speed (Approach Rate):", Assets.menuSkin, "song_style_result_values");
     private Label approachRateConfigLabel;
     private Label accuracyLabel = new Label("Avg. Accuracy:", Assets.menuSkin, "song_style_result_values");
     private Label accuracyResultLabel;
@@ -95,7 +95,7 @@ public class ResultsScreen implements Screen {
         greatLabel.setFontScale(fontScale);
         comboLabel.setFontScale(fontScale);
 
-        Label songResultTitle = new Label(Assets.selectedBeatmap.metadata.songName, Assets.menuSkin, "song_result_song_title");
+        Label songResultTitle = new Label(Assets.selectedBeatmap.metadata.songName.replaceAll("\\\\n", " "), Assets.menuSkin, "song_result_song_title");
         songResultTitle.setFontScale(fontScale);
 
 

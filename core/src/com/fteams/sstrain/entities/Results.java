@@ -49,18 +49,21 @@ public class Results {
         return 0f;
     }
 
-    public static Accuracy getAccuracyFor(float timing, double noteSpeed) {
+    // fixed time windows for registering taps - speed depen
+    public static Accuracy getAccuracyFor(float timing) {
         // Perfect
-        if (Math.abs(timing) < noteSpeed * 0.05f) {
+        // instead of windows deferred from the note speed, they seem to use a constant window for all the difficulties.
+
+        if (Math.abs(timing) < 0.080f) {
             return Accuracy.PERFECT;
         }
-        if (Math.abs(timing) < noteSpeed * 0.15f) {
+        if (Math.abs(timing) <  0.110f) {
             return Accuracy.GREAT;
         }
-        if (Math.abs(timing) < noteSpeed * 0.20f) {
+        if (Math.abs(timing) <  0.180f) {
             return Accuracy.NICE;
         }
-        if (Math.abs(timing) < noteSpeed * 0.5f) {
+        if (Math.abs(timing) <  0.200f) {
             return Accuracy.BAD;
         }
         return Accuracy.MISS;
