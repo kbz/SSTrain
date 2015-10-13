@@ -63,7 +63,7 @@ public class Circle implements Comparable<Circle> {
         this.speed = noteSpeed;
         this.spawnTime = (float) (timing - speed);
         this.startWaitTime = (float) (timing - speed);
-        this.endWaitTime = timing + (float) (0.5f * speed);
+        this.endWaitTime = timing + 0.25f;
         this.despawnTime = timing * 1.0f;
         this.size = 1f;
 
