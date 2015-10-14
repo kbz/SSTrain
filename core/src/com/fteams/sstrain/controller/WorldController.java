@@ -460,6 +460,7 @@ public class WorldController implements Music.OnCompletionListener {
     }
 
     private void hit(int matchedId) {
+        boolean hit = false;
         for (Circle mark : circles) {
             if (!mark.waiting) {
                 continue;
@@ -474,6 +475,8 @@ public class WorldController implements Music.OnCompletionListener {
                 if (accuracy == Accuracy.NONE)
                     continue;
 
+                hit = true;
+
                 playTapSoundForAccuracy(accuracy);
                 processAccuracy(accuracy, null, false);
 
@@ -484,6 +487,9 @@ public class WorldController implements Music.OnCompletionListener {
                 break;
             }
 
+        }
+        if (!hit) {
+            Assets.noHitTapSound.play(GlobalConfiguration.feedbackVolume / 100f);
         }
     }
 
