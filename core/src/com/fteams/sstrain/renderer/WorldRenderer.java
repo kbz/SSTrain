@@ -143,7 +143,7 @@ public class WorldRenderer {
         renderer.begin(ShapeRenderer.ShapeType.Line);
         drawTapZones();
         drawCircles();
-        //drawScore();
+        drawFlatBar();
         drawCombo();
         //drawProgressBar();
         drawAccuracyBar();
@@ -161,19 +161,24 @@ public class WorldRenderer {
         time += Gdx.graphics.getDeltaTime();
     }
 
+    private void drawFlatBar() {
+        float centerX = this.positionOffsetX + width / 2;
+        float y = this.positionOffsetY + height - height * 0.72f;
+        spriteBatch.draw(accBadBackground, centerX - width / 2f, y, width, height * 0.01f);
+    }
+
     private void drawAccuracyBar() {
         float centerX = this.positionOffsetX + width / 2;
         float y = this.positionOffsetY + height - height * 0.1f;
-        float zone = 400f/2000f; // the zone = 400 ms of range
-
+        float zone = (SongUtils.getSpeedFromConfig(GlobalConfiguration.noteSpeed)) * 0.6f / 2000f;
         // draw the background (bad level)
         spriteBatch.draw(accBadBackground, centerX - width / 6f, y, width / 3f, height * 0.01f);
         // draw the background (good level)
-        spriteBatch.draw(accGoodBackground, centerX - 0.9f * width / 6f, y, 0.9f * width / 3f, height * 0.01f);
+        spriteBatch.draw(accGoodBackground, centerX - 0.8333333f * width / 6f, y, 0.8333333f * width / 3f, height * 0.01f);
         // draw the background (great level)
-        spriteBatch.draw(accGreatBackground, centerX - 0.55f * width / 6f, y, 0.55f * width / 3f, height * 0.01f);
+        spriteBatch.draw(accGreatBackground, centerX - 0.50f * width / 6f, y, 0.50f * width / 3f, height * 0.01f);
         // draw the background (perfect level)
-        spriteBatch.draw(accPerfectBackground, centerX - 0.40f * width / 6f, y, 0.40f * width / 3f, height * 0.01f);
+        spriteBatch.draw(accPerfectBackground, centerX - 0.33333333f * width / 6f, y, 0.33333333f * width / 3f, height * 0.01f);
         // draw each of the 'markers'
         for (AccuracyMarker accMarker : world.getAccuracyMarkers()) {
             if (accMarker.display) {
@@ -244,7 +249,7 @@ public class WorldRenderer {
 
     private void drawTapZones() {
         float centerX = this.positionOffsetX + width / 2;
-        float centerY = this.positionOffsetY + height - height * 0.25f;
+        float centerY = this.positionOffsetY + height - height * 0.2f;
         float size = height * 0.125f;
         for (TapZone tapZone : world.getTapZones()) {
 
@@ -274,8 +279,8 @@ public class WorldRenderer {
 
     private void drawCircles() {
         float centerX = this.positionOffsetX + width / 2;
-        float centerY = this.positionOffsetY + height - height * 0.25f;
-        float size = height * 0.125f;
+        float centerY = this.positionOffsetY + height - height * 0.2f;
+        float size = height * 0.1f;
 
         for (Circle mark : world.getCircles()) {
             if (!mark.visible)

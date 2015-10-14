@@ -39,7 +39,7 @@ public class World {
         float h = 400;
         float w = 600;
 
-        float radius = h * 0.0625f;
+        float radius = h * 0.065f;
 
         Double noteSpeed = SongUtils.getSpeedFromConfig(GlobalConfiguration.noteSpeed) / 1000.0;
 
@@ -51,7 +51,8 @@ public class World {
 
         for (Note notesInfo : Assets.selectedBeatmap.notes) {
 
-            Circle mark = new Circle((notesInfo.endPos - 3) * 100, 0, notesInfo, noteSpeed, delay);
+            x = (notesInfo.endPos - 3) * radius * 4;
+            Circle mark = new Circle(x, 0, notesInfo, noteSpeed, delay);
             circles.add(mark);
         }
 //        System.out.println("Loaded: " + circles.size + " notes");

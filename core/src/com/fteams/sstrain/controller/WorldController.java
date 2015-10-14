@@ -439,12 +439,12 @@ public class WorldController implements Music.OnCompletionListener {
 
     private int getTapZoneForCoordinates(int screenX, int screenY, float ppuX, float ppuY, int width, int height, int pointer) {
         float centerX = world.offsetX + width / 2;
-        float centerY = world.offsetY + height * 0.25f;
+        float centerY = world.offsetY + height * 0.20f;
 
         float relativeX = (screenX - centerX) / ppuX;
         float relativeY = (-screenY + centerY) / ppuY;
 
-        float circleRadius = 400 * 0.0625f;
+        float circleRadius = 400 * 0.065f;
 
         int matchedId = -1;
         for (TapZone zone : tapZones) {
@@ -557,12 +557,12 @@ public class WorldController implements Music.OnCompletionListener {
 
     private int getTapZoneForCoordinatesNoMarking(float screenX, float screenY, float ppuX, float ppuY, int width, int height, int pointer) {
         float centerX = world.offsetX + width / 2;
-        float centerY = world.offsetY + height * 0.25f;
+        float centerY = world.offsetY + height * 0.20f;
 
         float relativeX = (screenX - centerX) / ppuX;
         float relativeY = (-screenY + centerY) / ppuY;
 
-        float circleRadius = 400 * 0.0625f;
+        float circleRadius = 400 * 0.065f;
 
         int matchedId = -1;
         for (TapZone zone : tapZones) {

@@ -63,7 +63,7 @@ public class Circle implements Comparable<Circle> {
         this.speed = noteSpeed;
         this.spawnTime = (float) (timing - speed);
         this.startWaitTime = (float) (timing - speed);
-        this.endWaitTime = timing + 0.25f;
+        this.endWaitTime = timing + SongUtils.getSpeedFromConfig(GlobalConfiguration.noteSpeed)/ 1000f * 0.3f;
         this.despawnTime = timing * 1.0f;
         this.size = 1f;
 
@@ -291,10 +291,6 @@ public class Circle implements Comparable<Circle> {
             return 1;
 
         return Long.compare(note.id, o.note.id);
-    }
-
-    public void updateWaitTime(Double timing) {
-        this.startWaitTime = timing.floatValue();
     }
 }
 
