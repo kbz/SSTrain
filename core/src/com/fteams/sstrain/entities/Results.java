@@ -51,22 +51,41 @@ public class Results {
         return 0f;
     }
 
-    // fixed time windows for registering taps - speed depen
     public static Accuracy getAccuracyFor(float timing) {
         // Perfect
         float zone = SongUtils.getSpeedFromConfig(GlobalConfiguration.noteSpeed) / 1000f;
         if (Math.abs(timing) < zone * 0.1f) {
             return Accuracy.PERFECT;
         }
-        if (Math.abs(timing) < zone * 0.150f) {
+        if (Math.abs(timing) < zone * 0.175f) {
             return Accuracy.GREAT;
         }
-        if (Math.abs(timing) < zone * 0.25f) {
+        if (Math.abs(timing) < zone * 0.20f) {
             return Accuracy.NICE;
         }
-        if (Math.abs(timing) < zone * 0.3f) {
+        if (Math.abs(timing) < zone * 0.25f) {
             return Accuracy.BAD;
         }
         return Accuracy.MISS;
     }
+
+    // holds and swipes have bigger windows
+    public static Accuracy getAccuracyForSwipesAndHolds(float timing) {
+        // Perfect
+//        float zone = SongUtils.getSpeedFromConfig(GlobalConfiguration.noteSpeed) / 1000f;
+//        if (Math.abs(timing) < zone * 0.25f) {
+//            return Accuracy.PERFECT;
+//        }
+//        if (Math.abs(timing) < zone * 0.3f) {
+//            return Accuracy.GREAT;
+//        }
+//        if (Math.abs(timing) < zone * 0.35f) {
+//            return Accuracy.NICE;
+//        }
+//        if (Math.abs(timing) < zone * 0.5f) {
+//            return Accuracy.BAD;
+//        }
+        return getAccuracyFor(timing * SWIPE_HOLD_MULTIPLIER);
+    }
+    public final static float SWIPE_HOLD_MULTIPLIER = 0.5f;
 }

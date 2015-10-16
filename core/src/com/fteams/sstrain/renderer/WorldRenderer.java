@@ -170,15 +170,15 @@ public class WorldRenderer {
     private void drawAccuracyBar() {
         float centerX = this.positionOffsetX + width / 2;
         float y = this.positionOffsetY + height - height * 0.1f;
-        float zone = (SongUtils.getSpeedFromConfig(GlobalConfiguration.noteSpeed)) * 0.6f / 2000f;
+        float zone = (SongUtils.getSpeedFromConfig(GlobalConfiguration.noteSpeed)) * 0.5f / 2000f;
         // draw the background (bad level)
         spriteBatch.draw(accBadBackground, centerX - width / 6f, y, width / 3f, height * 0.01f);
         // draw the background (good level)
-        spriteBatch.draw(accGoodBackground, centerX - 0.8333333f * width / 6f, y, 0.8333333f * width / 3f, height * 0.01f);
+        spriteBatch.draw(accGoodBackground, centerX - 0.8f * width / 6f, y, 0.8f * width / 3f, height * 0.01f);
         // draw the background (great level)
-        spriteBatch.draw(accGreatBackground, centerX - 0.50f * width / 6f, y, 0.50f * width / 3f, height * 0.01f);
+        spriteBatch.draw(accGreatBackground, centerX - 0.70f * width / 6f, y, 0.7f * width / 3f, height * 0.01f);
         // draw the background (perfect level)
-        spriteBatch.draw(accPerfectBackground, centerX - 0.33333333f * width / 6f, y, 0.33333333f * width / 3f, height * 0.01f);
+        spriteBatch.draw(accPerfectBackground, centerX - 0.4f * width / 6f, y, 0.4f * width / 3f, height * 0.01f);
         // draw each of the 'markers'
         for (AccuracyMarker accMarker : world.getAccuracyMarkers()) {
             if (accMarker.display) {
