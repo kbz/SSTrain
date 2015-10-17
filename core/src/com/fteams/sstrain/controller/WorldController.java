@@ -449,7 +449,7 @@ public class WorldController implements Music.OnCompletionListener {
         int matchedId = -1;
         for (TapZone zone : tapZones) {
             float x = zone.getPosition().x;
-            if (x - 2 * circleRadius < relativeX && relativeX < x + 2 * circleRadius && relativeY < -200) {
+            if (x - 2 * circleRadius < relativeX && relativeX < x + 2 * circleRadius && relativeY < -125) {
                 matchedId = zone.getId();
                 zone.pressed = true;
                 pointerToZoneId.put(pointer, matchedId);
@@ -574,7 +574,7 @@ public class WorldController implements Music.OnCompletionListener {
         int matchedId = -1;
         for (TapZone zone : tapZones) {
             float x = zone.getPosition().x;
-            if (x - circleRadius < relativeX && relativeX < x + circleRadius && relativeY < -200) {
+            if (x - circleRadius < relativeX && relativeX < x + circleRadius && relativeY < -125) {
                 matchedId = zone.getId();
                 break;
             }
