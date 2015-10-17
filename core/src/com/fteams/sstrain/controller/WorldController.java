@@ -562,7 +562,7 @@ public class WorldController implements Music.OnCompletionListener {
         }
     }
 
-    private int getTapZoneForCoordinatesNoMarking(float screenX, float screenY, float ppuX, float ppuY, int width, int height, int pointer) {
+    private TapZone getTapZoneForCoordinatesNoMarking(float screenX, float screenY, float ppuX, float ppuY, int width, int height, int pointer) {
         float centerX = world.offsetX + width / 2;
         float centerY = world.offsetY + height * 0.20f;
 
@@ -571,15 +571,13 @@ public class WorldController implements Music.OnCompletionListener {
 
         float circleRadius = 400 * 0.065f;
 
-        int matchedId = -1;
         for (TapZone zone : tapZones) {
             float x = zone.getPosition().x;
-            if (x - circleRadius < relativeX && relativeX < x + circleRadius && relativeY < -125) {
-                matchedId = zone.getId();
-                break;
+            if (x - 2 * circleRadius < relativeX && relativeX < x + 2 * circleRadius && relativeY < -125) {
+                return zone;
             }
         }
-        return matchedId;
+        return null;
     }
 
     public void dragged(int screenX, int screenY, int pointer, float ppuX, float ppuY, int width, int height) {
@@ -592,29 +590,37 @@ public class WorldController implements Music.OnCompletionListener {
             // first entry - just register the position.
             return;
         }
-        int matchedId = getTapZoneForCoordinatesNoMarking(coords.x, coords.y, ppuX, ppuY, width, height, pointer);
+        TapZone matched = getTapZoneForCoordinatesNoMarking(coords.x, coords.y, ppuX, ppuY, width, height, pointer);
 
-        if (matchedId == -1) {
+        if (matched == null) {
             coords.x = screenX;
             coords.y = screenY;
             return;
         }
 
         // after
-        int matchedId2 = getTapZoneForCoordinatesNoMarking(screenX, screenY, ppuX, ppuY, width, height, pointer);
+        TapZone matched2 = getTapZoneForCoordinatesNoMarking(screenX, screenY, ppuX, ppuY, width, height, pointer);
 
-        if (matchedId == matchedId2) {
-            // we haven't left the zone
+        if (!matched.equals(matched2)) {
+            // not sure how to process this - return.
+            coords.x = screenX;
+            coords.y = screenY;
             return;
         }
-        if (coords.x < screenX) {
-            swipeRight(matchedId);
-//            System.out.println("Swipe Right");
-        } else {
-            swipeLeft(matchedId);
-//            System.out.println("Swipe Left");
+        // we know we're inside the same zone so check if previous.x < center and current >= center
+        float centerX = world.offsetX + width / 2;
 
+        float relativeBeforeX = (coords.x - centerX) / ppuX;
+        float relativeAfterX = (screenX - centerX) / ppuX;
+
+        if (relativeBeforeX < matched.getPosition().x && matched.getPosition().x <= relativeAfterX) {
+            swipeRight(matched.getId());
+//            System.out.println("Swipe Right");
+        } else if (relativeAfterX < matched.getPosition().x && matched.getPosition().x <= relativeBeforeX) {
+            swipeLeft(matched.getId());
+//            System.out.println("Swipe Left");
         }
+        // else do nothing since we're swiping the same side
 
         coords.x = screenX;
         coords.y = screenY;
