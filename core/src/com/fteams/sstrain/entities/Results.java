@@ -87,5 +87,5 @@ public class Results {
 //        }
         return getAccuracyFor(timing * SWIPE_HOLD_MULTIPLIER);
     }
-    public final static float SWIPE_HOLD_MULTIPLIER = 2f/3f;
+    public final static float SWIPE_HOLD_MULTIPLIER = 0.5f;
 }
