@@ -8,6 +8,7 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -30,7 +31,7 @@ import com.fteams.sstrain.entities.BeatmapGroup;
 public class SongSelectionScreen implements Screen, InputProcessor {
 
     private Stage stage = new Stage(new ExtendViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()));
-    private List<BeatmapGroup> songList = new List<>(Assets.menuSkin);
+    private List<BeatmapGroup> songList = new List<>(Assets.menuSkin, "diff_list");
     private ScrollPane songListPane = new ScrollPane(null, Assets.menuSkin);
     private List<Beatmap> diffList = new List<>(Assets.menuSkin, "diff_list");
     private ScrollPane diffListPane = new ScrollPane(null, Assets.menuSkin);

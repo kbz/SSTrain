@@ -63,6 +63,7 @@ public class WorldRenderer {
     TextureRegion perfectMark;
 
     BitmapFont font;
+    BitmapFont songFont;
 
     GlyphLayout layout;
 
@@ -135,6 +136,7 @@ public class WorldRenderer {
         perfectMark = atlas.findRegion("perfect");
 
         font = Assets.font;
+        songFont = Assets.songFont;
     }
 
     public void render() {
@@ -194,22 +196,22 @@ public class WorldRenderer {
         String tapToBegin = "Tap to begin!";
         float centerX = this.positionOffsetX + width / 2;
         float centerY = this.positionOffsetY + height / 2 + height * 0.15f;
-        layout.setText(font, tapToBegin);
-        font.draw(spriteBatch, tapToBegin, centerX - layout.width / 2, centerY - layout.height / 2);
+        layout.setText(songFont, tapToBegin);
+        songFont.draw(spriteBatch, tapToBegin, centerX - layout.width / 2, centerY - layout.height / 2);
     }
 
     private void drawTapToContinue() {
         String tapToBegin = "Tap to continue!";
         float centerX = this.positionOffsetX + width / 2;
         float centerY = this.positionOffsetY + height / 2 + height * 0.15f;
-        layout.setText(font, tapToBegin);
-        font.draw(spriteBatch, tapToBegin, centerX - layout.width / 2, centerY - layout.height / 2);
+        layout.setText(songFont, tapToBegin);
+        songFont.draw(spriteBatch, tapToBegin, centerX - layout.width / 2, centerY - layout.height / 2);
 
         String backToExit = "Or press back again to skip to the Results screen.";
         centerX = this.positionOffsetX + width / 2;
         centerY = this.positionOffsetY + height / 2 + height * 0.1f;
-        layout.setText(font, backToExit);
-        font.draw(spriteBatch, backToExit, centerX - layout.width / 2, centerY - layout.height / 2);
+        layout.setText(songFont, backToExit);
+        songFont.draw(spriteBatch, backToExit, centerX - layout.width / 2, centerY - layout.height / 2);
     }
 
     private void drawAccuracy() {

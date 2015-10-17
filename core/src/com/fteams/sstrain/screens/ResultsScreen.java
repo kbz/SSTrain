@@ -44,7 +44,7 @@ public class ResultsScreen implements Screen {
     private Label missResultLabel;
     private Label comboLabel = new Label("Largest Combo:", Assets.menuSkin, "song_style_result_values");
     private Label comboResultLabel;
-    private Label titleLabel = new Label("Results/結果発表", Assets.menuSkin, "default");
+    private Label titleLabel = new Label("Results/結果発表", Assets.menuSkin, "results_title");
 
     @Override
     public void show() {
@@ -95,7 +95,7 @@ public class ResultsScreen implements Screen {
         greatLabel.setFontScale(fontScale);
         comboLabel.setFontScale(fontScale);
 
-        Label songResultTitle = new Label(Assets.selectedBeatmap.metadata.songName.replaceAll("\\\\n", " "), Assets.menuSkin, "song_result_song_title");
+        Label songResultTitle = new Label(Assets.selectedBeatmap.metadata.songName.replaceAll("\\\\n", " "), Assets.menuSkin, "results_song_title");
         songResultTitle.setFontScale(fontScale);
 
 

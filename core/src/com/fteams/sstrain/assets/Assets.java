@@ -46,6 +46,7 @@ public class Assets {
     public static Sound perfectSwipeSound;
 
     public static BitmapFont font;
+    public static BitmapFont songFont;
 
     public static Texture mainMenuBackgroundTexture;
     public static Texture holdBG;
@@ -68,6 +69,7 @@ public class Assets {
         internalManager.load("hitsounds/swipe_perfect.mp3", Sound.class);
         internalManager.load("bigimages/main_menu_background.jpg", Texture.class);
         internalManager.load("images/hold_background.png", Texture.class);
+        internalManager.load("fonts/combo-font.fnt", BitmapFont.class);
         internalManager.load("fonts/song-font.fnt", BitmapFont.class);
         reloadBeatmaps();
     }
@@ -120,8 +122,12 @@ public class Assets {
     }
 
     public static void setFonts() {
-        if (font == null)
-            font = internalManager.get("fonts/song-font.fnt");
+        if (font == null) {
+            font = internalManager.get("fonts/combo-font.fnt");
+        }
+        if (songFont == null) {
+            songFont= internalManager.get("fonts/song-font.fnt");
+        }
 
     }
 
@@ -179,7 +185,7 @@ public class Assets {
                 group.beatmaps.sort();
             }
         }
-        for (Long liveId: groupMap.keySet()) {
+        for (Long liveId : groupMap.keySet()) {
             songGroup.add(groupMap.get(liveId));
         }
         songGroup.sort();
@@ -191,9 +197,5 @@ public class Assets {
 
     public static float getProgress() {
         return (internalManager.getProgress() + externalManager.getProgress()) / 2;
-    }
-
-    public static void setSelectedBeatmap(Beatmap song) {
-        selectedBeatmap = song;
     }
 }

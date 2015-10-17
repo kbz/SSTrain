@@ -31,7 +31,7 @@ public class SettingsScreen extends ChangeListener implements Screen, InputProce
     private Image splashImage = new Image(texture);
 
     private Stage stage = new Stage();
-    private Label titleLabel = new Label("Settings/設定", Assets.menuSkin, "default");
+    private Label titleLabel = new Label("Settings/設定", Assets.menuSkin, "settings_title");
 
     private Label songVolumeLabel = new Label("Song Volume", Assets.menuSkin, "song_style_result");
     private Label feedbackVolumeLabel = new Label("Touch Feedback Volume", Assets.menuSkin, "song_style_result");
@@ -62,8 +62,10 @@ public class SettingsScreen extends ChangeListener implements Screen, InputProce
     private CheckBox playHintSoundCheckbox;
     private CheckBox syncModeCheckbox;
     private CheckBox sortingModeChooser;
+    private CheckBox sortingOrderChooser;
 
     private String[] sortingModes = {"File Name", "Song Name", "Song Id", "Attribute", "Duration"};
+    private String[] sortingOrders = {"Ascending", "Descending"};
 
     private final static boolean DEBUG = false;
 
@@ -78,6 +80,7 @@ public class SettingsScreen extends ChangeListener implements Screen, InputProce
     private Integer newInputOffset;
     private Boolean newHitSoundsSetting;
     private Integer newSortingMode;
+    private Integer newSortingOrder;
     private Integer newSyncMode;
     private Integer newNoteSpeed;
 
@@ -100,6 +103,7 @@ public class SettingsScreen extends ChangeListener implements Screen, InputProce
         newNoteSpeed = GlobalConfiguration.noteSpeed;
         newHitSoundsSetting = GlobalConfiguration.playHintSounds;
         newSortingMode = GlobalConfiguration.sortMode;
+        newSortingOrder = GlobalConfiguration.sortOrder;
         newSyncMode = GlobalConfiguration.syncMode;
 
         ButtonGroup<TextButton> buttonGroup = new ButtonGroup<>();
@@ -257,6 +261,11 @@ public class SettingsScreen extends ChangeListener implements Screen, InputProce
         sortingModeChooser.getImageCell().width(0);
         sortingModeChooser.addListener(this);
 
+        sortingOrderChooser = new CheckBox("Sorting Order: " + sortingOrders[GlobalConfiguration.sortOrder], Assets.menuSkin);
+        sortingOrderChooser.getLabel().setFontScale(fontScale);
+        sortingOrderChooser.getImageCell().width(0);
+        sortingOrderChooser.addListener(this);
+
         // extras - random mode
         final Table otherTable = new Table();
 
@@ -266,6 +275,7 @@ public class SettingsScreen extends ChangeListener implements Screen, InputProce
         otherTable.add(pathToBeatmaps).width(stage.getWidth() * 0.6f).padTop(stage.getHeight() * 0.01f).padBottom(stage.getHeight() * 0.01f).fillX().left().row();
         otherTable.add(pathValueLabel).padTop(stage.getHeight() * 0.01f).padBottom(stage.getHeight() * 0.01f).fillX().left().padLeft(stage.getWidth() * 0.03f).row();
         otherTable.add(sortingModeChooser).padTop(stage.getHeight() * 0.01f).padBottom(stage.getHeight() * 0.01f).left().row();
+        otherTable.add(sortingOrderChooser).padTop(stage.getHeight() * 0.01f).padBottom(stage.getHeight() * 0.01f).left().row();
         otherTable.add().expand().fill().row();
         otherTable.add(reloadBeatmaps).padTop(stage.getHeight() * 0.01f).padBottom(stage.getHeight() * 0.01f).left().row();
 
@@ -312,6 +322,7 @@ public class SettingsScreen extends ChangeListener implements Screen, InputProce
                 GlobalConfiguration.noteSpeed = newNoteSpeed;
                 GlobalConfiguration.playHintSounds = newHitSoundsSetting;
                 GlobalConfiguration.sortMode = newSortingMode;
+                GlobalConfiguration.sortOrder = newSortingOrder;
                 GlobalConfiguration.syncMode = newSyncMode;
                 GlobalConfiguration.storeConfiguration();
                 ((Game) Gdx.app.getApplicationListener()).setScreen(new MainMenuScreen());
@@ -379,7 +390,7 @@ public class SettingsScreen extends ChangeListener implements Screen, InputProce
         }
         if (actor == noteSpeedSlider) {
             newNoteSpeed = (int) ((Slider) actor).getValue();
-            noteSpeedValueLabel.setText(newNoteSpeed +"");
+            noteSpeedValueLabel.setText(newNoteSpeed + "");
         }
         if (actor == playHintSoundCheckbox) {
             newHitSoundsSetting = playHintSoundCheckbox.isChecked();
@@ -388,6 +399,10 @@ public class SettingsScreen extends ChangeListener implements Screen, InputProce
         if (actor == sortingModeChooser) {
             newSortingMode = (newSortingMode + 1) % sortingModes.length;
             sortingModeChooser.setText("Sorting Mode: " + sortingModes[newSortingMode]);
+        }
+        if (actor == sortingOrderChooser) {
+            newSortingOrder = (newSortingOrder + 1) % sortingOrders.length;
+            sortingOrderChooser.setText("Sorting Order: " + sortingOrders[newSortingOrder]);
         }
         if (actor == syncModeCheckbox) {
             newSyncMode = (newSyncMode + 1) % 4;

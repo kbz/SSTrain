@@ -5,10 +5,14 @@ public class Metadata extends BaseMetadata{
     public Long difficulty;
 
     public int compareTo(Metadata metadata) {
-        if (difficulty.equals(metadata.difficulty))
+        if (songName.equals(metadata.songName))
         {
-            return difficultyName.compareTo(metadata.difficultyName);
+            if (difficulty.equals(metadata.difficulty))
+            {
+                return difficultyName.compareTo(metadata.difficultyName);
+            }
+            else return Long.compare(difficulty, metadata.difficulty);
         }
-        return Long.compare(difficulty, metadata.difficulty);
+        return songName.compareTo(metadata.songName);
     }
 }

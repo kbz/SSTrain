@@ -11,7 +11,7 @@ public class Beatmap implements Comparable<Beatmap>{
         if (metadata == null)
             return 1;
         if (o.metadata == null)
-            return 2;
+            return -1;
         return metadata.compareTo(o.metadata);
     }
 

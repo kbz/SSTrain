@@ -25,7 +25,7 @@ public class MainMenuScreen implements Screen, InputProcessor {
     private TextButton buttonPlay = new TextButton("Play/プレイ", Assets.menuSkin, "item1");
     private TextButton buttonSettings = new TextButton("Settings/設定", Assets.menuSkin, "item1");
 
-    private Label title = new Label("SS Train", Assets.menuSkin);
+    private Label title = new Label("SS Train", Assets.menuSkin, "title");
 
     @Override
     public void render(float delta) {
@@ -63,15 +63,15 @@ public class MainMenuScreen implements Screen, InputProcessor {
         //The elements are displayed in the order you add them.
         //The first appear on top, the last at the bottom.
         // title font scale = 1 for a 720 height
-        float fontScale = stage.getHeight()/ GlobalConfiguration.BASE_HEIGHT;
+        float fontScale = stage.getHeight() / GlobalConfiguration.BASE_HEIGHT;
 
         title.setFontScale(fontScale);
-        table.add(title).padBottom(stage.getHeight()*0.1f).row();
+        table.add(title).padBottom(stage.getHeight() * 0.1f).row();
 
         buttonPlay.getLabel().setFontScale(fontScale);
         buttonSettings.getLabel().setFontScale(fontScale);
-        table.add(buttonPlay).size(stage.getWidth()*0.2f, stage.getHeight()*0.10f).padBottom(stage.getHeight()*0.04f).row();
-        table.add(buttonSettings).size(stage.getWidth()*0.2f, stage.getHeight()*0.10f).padBottom(stage.getHeight()*0.04f).row();
+        table.add(buttonPlay).size(stage.getWidth() * 0.2f, stage.getHeight() * 0.10f).padBottom(stage.getHeight() * 0.04f).row();
+        table.add(buttonSettings).size(stage.getWidth() * 0.2f, stage.getHeight() * 0.10f).padBottom(stage.getHeight() * 0.04f).row();
 
         table.setFillParent(true);
         stage.addActor(table);

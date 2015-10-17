@@ -16,6 +16,9 @@ public class SongUtils {
     public final static Integer SORTING_MODE_SONG_ID = 2;
     public final static Integer SORTING_MODE_ATTRIBUTE = 3;
 
+    public final static Integer SORTING_MODE_ASCENDING = 0;
+    public final static Integer SORTING_MODE_DESCENDING = 1;
+
     public final static Integer SYNC_MODE_1 = 0;
     public final static Integer SYNC_MODE_2 = 1;
     public final static Integer SYNC_MODE_3 = 2;
