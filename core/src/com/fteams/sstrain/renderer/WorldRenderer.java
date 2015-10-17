@@ -176,11 +176,11 @@ public class WorldRenderer {
         // draw the background (bad level)
         spriteBatch.draw(accBadBackground, centerX - width / 6f, y, width / 3f, height * 0.01f);
         // draw the background (good level)
-        spriteBatch.draw(accGoodBackground, centerX - 0.8f * width / 6f, y, 0.8f * width / 3f, height * 0.01f);
+        spriteBatch.draw(accGoodBackground, centerX - 0.9f * width / 6f, y, 0.9f * width / 3f, height * 0.01f);
         // draw the background (great level)
         spriteBatch.draw(accGreatBackground, centerX - 0.70f * width / 6f, y, 0.7f * width / 3f, height * 0.01f);
         // draw the background (perfect level)
-        spriteBatch.draw(accPerfectBackground, centerX - 0.4f * width / 6f, y, 0.4f * width / 3f, height * 0.01f);
+        spriteBatch.draw(accPerfectBackground, centerX - 0.6f * width / 6f, y, 0.6f * width / 3f, height * 0.01f);
         // draw each of the 'markers'
         for (AccuracyMarker accMarker : world.getAccuracyMarkers()) {
             if (accMarker.display) {
