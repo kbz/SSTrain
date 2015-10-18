@@ -575,7 +575,7 @@ public class WorldController implements Music.OnCompletionListener {
 
         for (TapZone zone : tapZones) {
             float x = zone.getPosition().x;
-            if (x - 0.5 * circleRadius < relativeX && relativeX < x +  0.5* circleRadius && relativeY < -125) {
+            if (x - 2 * circleRadius < relativeX && relativeX < x + 2 * circleRadius && relativeY < -125) {
                 return zone;
             }
         }
@@ -604,19 +604,25 @@ public class WorldController implements Music.OnCompletionListener {
         // new coords
         TapZone matched2 = getTapZoneForCoordinatesNoMarking(screenX, screenY, ppuX, ppuY, width, height, pointer);
 
-        if (matched.equals(matched2)) {
+        if (!matched.equals(matched2)) {
             coords.x = screenX;
             coords.y = screenY;
             return;
         }
 
-        if (coords.x < screenX) {
-            swipeRight(matched.getId());
-            System.out.println("Swipe Right");
-        } else {
-            swipeLeft(matched.getId());
-            System.out.println("Swipe Left");
+        float centerX = world.offsetX + width / 2;
 
+        float relativeBeforeX = (coords.x - centerX) / ppuX;
+        float relativeAfterX = (screenX - centerX) / ppuX;
+
+        float circleRadius = 400 * 0.065f;
+        float x1 = matched.getPosition().x + circleRadius * 0.5f;
+        float x2 = matched.getPosition().x - circleRadius * 0.5f;
+
+        if (relativeBeforeX < x1 && x1 <= relativeAfterX) {
+            swipeRight(matched.getId());
+        } else if (relativeBeforeX > x2 && x2 > relativeAfterX) {
+            swipeLeft(matched.getId());
         }
         // else do nothing since we're swiping the same side
 

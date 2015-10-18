@@ -116,7 +116,7 @@ public class SongScreen implements Screen, InputProcessor {
     @Override
     public boolean touchDragged(int screenX, int screenY, int pointer) {
         controller.dragged(screenX, screenY, pointer, renderer.ppuX, renderer.ppuY, width, height);
-        return false;
+        return true;
     }
 
     @Override
