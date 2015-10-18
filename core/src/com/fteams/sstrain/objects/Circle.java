@@ -150,6 +150,7 @@ public class Circle implements Comparable<Circle> {
             nextNote.miss = true;
             nextNote.accuracy = Accuracy.MISS;
             nextNote.processed = true;
+            nextNote.waiting = false;
 //            System.out.println("MISS-001: didn't hit the note (" + note.id + ")");
         } else if (nextNote == null && endWaitTime <= time && !miss && accuracy == null) {
             waiting = false;
@@ -228,8 +229,7 @@ public class Circle implements Comparable<Circle> {
             miss = true;
             processed = true;
 //            System.out.println("MISS-005: released hold too early (" + note.id + ")");
-        }
-        else {
+        } else {
             hitTime = previousTime - despawnTime - GlobalConfiguration.inputOffset / 1000f;
             hitTime *= Results.SWIPE_HOLD_MULTIPLIER;
         }
@@ -245,6 +245,11 @@ public class Circle implements Comparable<Circle> {
             previousNote.release();
         }
 
+        if (previousNote != null && previousNote.previousNote != null) {
+            if (previousNote.previousNote.note.status.equals(note.status) && !previousNote.isDone()) {
+                return Accuracy.NONE;
+            }
+        }
         Accuracy accuracy = Results.getAccuracyForSwipesAndHolds(previousTime - despawnTime - GlobalConfiguration.inputOffset / 1000f);
         // If the note was tapped too early, we ignore the tap
         if (despawnTime > previousTime && accuracy == Accuracy.MISS) {
@@ -268,6 +273,12 @@ public class Circle implements Comparable<Circle> {
             previousNote.release();
         }
 
+        if (previousNote != null && previousNote.previousNote != null) {
+            if (previousNote.previousNote.note.status.equals(note.status) && !previousNote.isDone()) {
+                return Accuracy.NONE;
+            }
+        }
+
         Accuracy accuracy = Results.getAccuracyForSwipesAndHolds(previousTime - despawnTime - GlobalConfiguration.inputOffset / 1000f);
         // If the note was tapped too early, we ignore the tap
         if (despawnTime > previousTime && accuracy == Accuracy.MISS) {
@@ -289,8 +300,13 @@ public class Circle implements Comparable<Circle> {
     public int compareTo(Circle o) {
         if (o == null)
             return 1;
+        // if the notes have the same timing, sort them by destination
+        if (0 == Double.compare(note.timing, o.note.timing))
+        {
+            return Long.compare(destination, o.destination);
+        }
 
-        return Long.compare(note.id, o.note.id);
+        return Double.compare(note.timing, o.note.timing);
     }
 }
 

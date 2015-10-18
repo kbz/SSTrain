@@ -58,6 +58,7 @@ public class World {
 //        System.out.println("Loaded: " + circles.size + " notes");
 
         linkCircles(circles);
+        circles.sort();
 
         int zoneId = 1;
         tapZones = new Array<>();

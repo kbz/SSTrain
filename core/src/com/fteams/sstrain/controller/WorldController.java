@@ -466,8 +466,9 @@ public class WorldController implements Music.OnCompletionListener {
                 continue;
             }
             // swiped notes don't register on hit.
-            if (!mark.note.status.equals(SongUtils.NOTE_NO_SWIPE))
-                continue;
+            if (!mark.note.status.equals(SongUtils.NOTE_NO_SWIPE) && mark.destination == matchedId) {
+                break;
+            }
 
             if (mark.destination == (matchedId)) {
                 Accuracy accuracy = mark.hit();
@@ -512,8 +513,7 @@ public class WorldController implements Music.OnCompletionListener {
                     playTapSoundForAccuracy(accuracy);
                 }
                 accuracyPopups.add(new AccuracyPopup(accuracy, mark.hitTime < 0));
-                if (accuracy != Accuracy.MISS)
-                {
+                if (accuracy != Accuracy.MISS) {
                     accuracyMarkers.add(new AccuracyMarker(mark.hitTime));
                 }
                 processAccuracy(mark.accuracy, null, false);
