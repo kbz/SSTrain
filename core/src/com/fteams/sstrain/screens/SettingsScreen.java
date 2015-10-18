@@ -266,7 +266,6 @@ public class SettingsScreen extends ChangeListener implements Screen, InputProce
         sortingOrderChooser.getImageCell().width(0);
         sortingOrderChooser.addListener(this);
 
-        // extras - random mode
         final Table otherTable = new Table();
 
         otherTable.setHeight(stage.getHeight() * 0.7f);

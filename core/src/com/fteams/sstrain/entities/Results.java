@@ -54,13 +54,13 @@ public class Results {
     public static Accuracy getAccuracyFor(float timing) {
         // Perfect
         float zone = SongUtils.getSpeedFromConfig(GlobalConfiguration.noteSpeed) / 1000f;
-        if (Math.abs(timing) < zone * 0.150f) {
+        if (Math.abs(timing) < zone * 0.125f) {
             return Accuracy.PERFECT;
         }
-        if (Math.abs(timing) < zone * 0.175f) {
+        if (Math.abs(timing) < zone * 0.15f) {
             return Accuracy.GREAT;
         }
-        if (Math.abs(timing) < zone * 0.225f) {
+        if (Math.abs(timing) < zone * 0.2f) {
             return Accuracy.NICE;
         }
         if (Math.abs(timing) < zone * 0.25f) {

@@ -226,6 +226,7 @@ public class Circle implements Comparable<Circle> {
             waiting = false;
             visible = false;
             miss = true;
+            processed = true;
 //            System.out.println("MISS-005: released hold too early (" + note.id + ")");
         }
         else {

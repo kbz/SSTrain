@@ -512,7 +512,10 @@ public class WorldController implements Music.OnCompletionListener {
                     playTapSoundForAccuracy(accuracy);
                 }
                 accuracyPopups.add(new AccuracyPopup(accuracy, mark.hitTime < 0));
-                accuracyMarkers.add(new AccuracyMarker(mark.hitTime));
+                if (accuracy != Accuracy.MISS)
+                {
+                    accuracyMarkers.add(new AccuracyMarker(mark.hitTime));
+                }
                 processAccuracy(mark.accuracy, null, false);
                 accuracyList.add(accuracy);
                 // 1 mark per release
