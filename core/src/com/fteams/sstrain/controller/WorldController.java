@@ -562,6 +562,8 @@ public class WorldController implements Music.OnCompletionListener {
         }
     }
 
+    // we only retrieve  the inner ring of the circle 1/2 of it, hopefully this will give it a
+    // better feel than before
     private TapZone getTapZoneForCoordinatesNoMarking(float screenX, float screenY, float ppuX, float ppuY, int width, int height, int pointer) {
         float centerX = world.offsetX + width / 2;
         float centerY = world.offsetY + height * 0.20f;
@@ -573,7 +575,7 @@ public class WorldController implements Music.OnCompletionListener {
 
         for (TapZone zone : tapZones) {
             float x = zone.getPosition().x;
-            if (x - 2 * circleRadius < relativeX && relativeX < x + 2 * circleRadius && relativeY < -125) {
+            if (x - 0.5 * circleRadius < relativeX && relativeX < x +  0.5* circleRadius && relativeY < -125) {
                 return zone;
             }
         }
@@ -590,6 +592,7 @@ public class WorldController implements Music.OnCompletionListener {
             // first entry - just register the position.
             return;
         }
+        // previous coords
         TapZone matched = getTapZoneForCoordinatesNoMarking(coords.x, coords.y, ppuX, ppuY, width, height, pointer);
 
         if (matched == null) {
@@ -598,27 +601,22 @@ public class WorldController implements Music.OnCompletionListener {
             return;
         }
 
-        // after
+        // new coords
         TapZone matched2 = getTapZoneForCoordinatesNoMarking(screenX, screenY, ppuX, ppuY, width, height, pointer);
 
-        if (!matched.equals(matched2)) {
-            // not sure how to process this - return.
+        if (matched.equals(matched2)) {
             coords.x = screenX;
             coords.y = screenY;
             return;
         }
-        // we know we're inside the same zone so check if previous.x < center and current >= center
-        float centerX = world.offsetX + width / 2;
 
-        float relativeBeforeX = (coords.x - centerX) / ppuX;
-        float relativeAfterX = (screenX - centerX) / ppuX;
-
-        if (relativeBeforeX < matched.getPosition().x && matched.getPosition().x <= relativeAfterX) {
+        if (coords.x < screenX) {
             swipeRight(matched.getId());
-//            System.out.println("Swipe Right");
-        } else if (relativeAfterX < matched.getPosition().x && matched.getPosition().x <= relativeBeforeX) {
+            System.out.println("Swipe Right");
+        } else {
             swipeLeft(matched.getId());
-//            System.out.println("Swipe Left");
+            System.out.println("Swipe Left");
+
         }
         // else do nothing since we're swiping the same side
 
