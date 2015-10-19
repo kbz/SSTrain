@@ -62,8 +62,8 @@ public class Circle implements Comparable<Circle> {
         this.destination = note.endPos;
         this.speed = noteSpeed;
         this.spawnTime = (float) (timing - speed);
-        this.startWaitTime = (float) (timing - speed);
-        this.endWaitTime = timing + SongUtils.getSpeedFromConfig(GlobalConfiguration.noteSpeed) / 1000f * 0.3f;
+        this.startWaitTime = (float) (timing - (hold || !note.status.equals(SongUtils.NOTE_NO_SWIPE) ? 2f : 1f) * SongUtils.overallDiffBad[GlobalConfiguration.overallDifficulty] / 1000f);
+        this.endWaitTime = (float) (timing + (hold || !note.status.equals(SongUtils.NOTE_NO_SWIPE) ? 2f : 1f) * SongUtils.overallDiffBad[GlobalConfiguration.overallDifficulty] / 1000f);
         this.despawnTime = timing * 1.0f;
         this.size = 1f;
 
@@ -79,6 +79,22 @@ public class Circle implements Comparable<Circle> {
         holding = false;
         soundPlayed = false;
         miss = false;
+    }
+
+    public void setPreviousNote(Circle previousNote) {
+        this.previousNote = previousNote;
+        if (previousNote != null) {
+            if (previousNote.hold && previousNote.previousNote == null) {
+                this.startWaitTime = (float) (despawnTime - 2f * SongUtils.overallDiffBad[GlobalConfiguration.overallDifficulty] / 1000f);
+                this.endWaitTime = (float) (despawnTime + 2f * SongUtils.overallDiffBad[GlobalConfiguration.overallDifficulty] / 1000f);
+
+            }
+        }
+
+    }
+
+    public void setNextNote(Circle nextNote) {
+        this.nextNote = nextNote;
     }
 
     private void initializeVelocity() {

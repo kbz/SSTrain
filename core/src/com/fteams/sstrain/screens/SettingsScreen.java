@@ -38,6 +38,7 @@ public class SettingsScreen extends ChangeListener implements Screen, InputProce
     private Label offsetLabel = new Label("Global offset", Assets.menuSkin, "song_style_result");
     private Label inputOffsetLabel = new Label("Input offset", Assets.menuSkin, "song_style_result");
     private Label noteSpeedLabel = new Label("Note Speed (Approach Rate)", Assets.menuSkin, "song_style_result");
+    private Label overallDifficultyLabel = new Label("Timing Window (Overall Difficulty)", Assets.menuSkin, "song_style_result");
     private Label pathToBeatmaps = new Label("Path to Beatmaps", Assets.menuSkin, "song_style_result");
 
     private TextButton volumeSettingsTabButton = new TextButton("Volume Settings", Assets.menuSkin, "item1");
@@ -52,12 +53,14 @@ public class SettingsScreen extends ChangeListener implements Screen, InputProce
     private Label offsetValueLabel;
     private Label inputOffsetValueLabel;
     private Label noteSpeedValueLabel;
+    private Label overallDifficultyValueLabel;
 
     private Slider songVolumeSlider;
     private Slider feedbackVolumeSlider;
     private Slider offsetSlider;
     private Slider inputOffsetSlider;
     private Slider noteSpeedSlider;
+    private Slider overallDifficultySlider;
 
     private CheckBox playHintSoundCheckbox;
     private CheckBox syncModeCheckbox;
@@ -83,6 +86,7 @@ public class SettingsScreen extends ChangeListener implements Screen, InputProce
     private Integer newSortingOrder;
     private Integer newSyncMode;
     private Integer newNoteSpeed;
+    private Integer newOverallDifficulty;
 
     @Override
     public void show() {
@@ -101,6 +105,7 @@ public class SettingsScreen extends ChangeListener implements Screen, InputProce
         newGlobalOffset = GlobalConfiguration.offset;
         newInputOffset = GlobalConfiguration.inputOffset;
         newNoteSpeed = GlobalConfiguration.noteSpeed;
+        newOverallDifficulty = GlobalConfiguration.overallDifficulty;
         newHitSoundsSetting = GlobalConfiguration.playHintSounds;
         newSortingMode = GlobalConfiguration.sortMode;
         newSortingOrder = GlobalConfiguration.sortOrder;
@@ -211,6 +216,15 @@ public class SettingsScreen extends ChangeListener implements Screen, InputProce
         noteSpeedValueLabel = new Label(Integer.toString(GlobalConfiguration.noteSpeed) + "", Assets.menuSkin, "song_style_result");
         noteSpeedValueLabel.setFontScale(fontScale);
 
+        // timing window
+        overallDifficultySlider = new Slider(0, 10, 1, false, Assets.menuSkin);
+        overallDifficultySlider.setValue(GlobalConfiguration.overallDifficulty);
+        overallDifficultySlider.addListener(this);
+
+        overallDifficultyLabel.setFontScale(fontScale);
+        overallDifficultyValueLabel = new Label(Integer.toString(GlobalConfiguration.overallDifficulty) + "", Assets.menuSkin, "song_style_result");
+        overallDifficultyValueLabel.setFontScale(fontScale);
+
         syncModeCheckbox = new CheckBox("Sync Mode: " + SongUtils.syncModes[newSyncMode], Assets.menuSkin);
         syncModeCheckbox.getLabel().setFontScale(fontScale);
         syncModeCheckbox.getImageCell().width(0);
@@ -225,21 +239,27 @@ public class SettingsScreen extends ChangeListener implements Screen, InputProce
         offsetTable.add().width(stage.getWidth() * 0.20f);
         offsetTable.add(offsetValueLabel).width(stage.getWidth() * 0.10f).padTop(stage.getHeight() * 0.01f).padBottom(stage.getHeight() * 0.01f).right().row();
         offsetTable.add(offsetSlider).width(stage.getWidth() * 0.6f).height(offsetLabel.getHeight() * fontScale).padTop(stage.getHeight() * 0.01f).padBottom(stage.getHeight() * 0.01f).colspan(3).row();
-        offsetTable.add().height(offsetValueLabel.getHeight()).row();
+        offsetTable.add().height(offsetValueLabel.getHeight() / 2f).row();
 
         // input offset
         offsetTable.add(inputOffsetLabel).width(stage.getWidth() * 0.3f).padTop(stage.getHeight() * 0.01f).padBottom(stage.getHeight() * 0.01f).fillX();
         offsetTable.add().width(stage.getWidth() * 0.20f);
         offsetTable.add(inputOffsetValueLabel).width(stage.getWidth() * 0.10f).padTop(stage.getHeight() * 0.01f).padBottom(stage.getHeight() * 0.01f).right().row();
         offsetTable.add(inputOffsetSlider).width(stage.getWidth() * 0.6f).height(inputOffsetLabel.getHeight() * fontScale).padTop(stage.getHeight() * 0.01f).padBottom(stage.getHeight() * 0.01f).colspan(3).row();
-        offsetTable.add().height(offsetValueLabel.getHeight()).row();
+        offsetTable.add().height(offsetValueLabel.getHeight() / 2f).row();
 
         // note speed
         offsetTable.add(noteSpeedLabel).width(stage.getWidth() * 0.3f).padTop(stage.getHeight() * 0.01f).padBottom(stage.getHeight() * 0.01f).fillX();
         offsetTable.add().width(stage.getWidth() * 0.20f);
         offsetTable.add(noteSpeedValueLabel).width(stage.getWidth() * 0.10f).padTop(stage.getHeight() * 0.01f).padBottom(stage.getHeight() * 0.01f).right().row();
         offsetTable.add(noteSpeedSlider).width(stage.getWidth() * 0.6f).height(noteSpeedLabel.getHeight() * fontScale).padTop(stage.getHeight() * 0.01f).padBottom(stage.getHeight() * 0.01f).colspan(3).row();
-        offsetTable.add().height(noteSpeedValueLabel.getHeight()).row();
+        offsetTable.add().height(noteSpeedValueLabel.getHeight() / 2f).row();
+
+        offsetTable.add(overallDifficultyLabel).width(stage.getWidth() * 0.3f).padTop(stage.getHeight() * 0.01f).padBottom(stage.getHeight() * 0.01f).fillX();
+        offsetTable.add().width(stage.getWidth() * 0.20f);
+        offsetTable.add(overallDifficultyValueLabel).width(stage.getWidth() * 0.10f).padTop(stage.getHeight() * 0.01f).padBottom(stage.getHeight() * 0.01f).right().row();
+        offsetTable.add(overallDifficultySlider).width(stage.getWidth() * 0.6f).height(overallDifficultyLabel.getHeight() * fontScale).padTop(stage.getHeight() * 0.01f).padBottom(stage.getHeight() * 0.01f).colspan(3).row();
+        offsetTable.add().height(overallDifficultyValueLabel.getHeight() / 2f).row();
 
         // sync mode setting
         offsetTable.add(syncModeCheckbox).height(inputOffsetLabel.getHeight() * fontScale).padTop(stage.getHeight() * 0.01f).padBottom(stage.getHeight() * 0.01f).left().colspan(3).row();
@@ -319,6 +339,7 @@ public class SettingsScreen extends ChangeListener implements Screen, InputProce
                 GlobalConfiguration.offset = newGlobalOffset;
                 GlobalConfiguration.inputOffset = newInputOffset;
                 GlobalConfiguration.noteSpeed = newNoteSpeed;
+                GlobalConfiguration.overallDifficulty = newOverallDifficulty;
                 GlobalConfiguration.playHintSounds = newHitSoundsSetting;
                 GlobalConfiguration.sortMode = newSortingMode;
                 GlobalConfiguration.sortOrder = newSortingOrder;
@@ -390,6 +411,10 @@ public class SettingsScreen extends ChangeListener implements Screen, InputProce
         if (actor == noteSpeedSlider) {
             newNoteSpeed = (int) ((Slider) actor).getValue();
             noteSpeedValueLabel.setText(newNoteSpeed + "");
+        }
+        if (actor == overallDifficultySlider) {
+            newOverallDifficulty = (int) ((Slider) actor).getValue();
+            overallDifficultyValueLabel.setText(newOverallDifficulty+ "");
         }
         if (actor == playHintSoundCheckbox) {
             newHitSoundsSetting = playHintSoundCheckbox.isChecked();

@@ -172,15 +172,19 @@ public class WorldRenderer {
     private void drawAccuracyBar() {
         float centerX = this.positionOffsetX + width / 2;
         float y = this.positionOffsetY + height - height * 0.1f;
-        float zone = (SongUtils.getSpeedFromConfig(GlobalConfiguration.noteSpeed)) * 0.5f / 2000f;
+        float bad = (float)(SongUtils.overallDiffBad[GlobalConfiguration.overallDifficulty ] * 1f);
+        float nice = (float)(SongUtils.overallDiffNice[GlobalConfiguration.overallDifficulty ] * 1f);
+        float great = (float)(SongUtils.overallDiffGreat[GlobalConfiguration.overallDifficulty ] * 1f);
+        float perfect = (float)(SongUtils.overallDiffPerf[GlobalConfiguration.overallDifficulty ] * 1f);
+        float zone = bad/1000f;
         // draw the background (bad level)
         spriteBatch.draw(accBadBackground, centerX - width / 6f, y, width / 3f, height * 0.01f);
         // draw the background (good level)
-        spriteBatch.draw(accGoodBackground, centerX - 0.8f * width / 6f, y, 0.8f * width / 3f, height * 0.01f);
+        spriteBatch.draw(accGoodBackground, centerX - nice/bad * width / 6f, y, nice/bad * width / 3f, height * 0.01f);
         // draw the background (great level)
-        spriteBatch.draw(accGreatBackground, centerX - 0.60f * width / 6f, y, 0.6f * width / 3f, height * 0.01f);
+        spriteBatch.draw(accGreatBackground, centerX - great/bad * width / 6f, y, great/bad * width / 3f, height * 0.01f);
         // draw the background (perfect level)
-        spriteBatch.draw(accPerfectBackground, centerX - 0.5f * width / 6f, y, 0.5f * width / 3f, height * 0.01f);
+        spriteBatch.draw(accPerfectBackground, centerX - perfect/bad * width / 6f, y, perfect/bad * width / 3f, height * 0.01f);
         // draw each of the 'markers'
         for (AccuracyMarker accMarker : world.getAccuracyMarkers()) {
             if (accMarker.display) {

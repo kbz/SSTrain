@@ -15,6 +15,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.fteams.sstrain.assets.Assets;
 import com.fteams.sstrain.config.GlobalConfiguration;
 import com.fteams.sstrain.entities.Results;
+import com.fteams.sstrain.util.SongUtils;
 
 public class ResultsScreen implements Screen {
 
@@ -24,8 +25,10 @@ public class ResultsScreen implements Screen {
     private Table table = new Table();
     private Label difficulty = new Label("Difficulty:", Assets.menuSkin, "song_style_result_values");
     private Label difficultyLabel;
-    private Label approachRateLabel = new Label("Note Speed (Approach Rate):", Assets.menuSkin, "song_style_result_values");
+    private Label approachRateLabel = new Label("Approach Rate:", Assets.menuSkin, "song_style_result_values");
     private Label approachRateConfigLabel;
+    private Label overallDifficultyLabel = new Label("Overall Difficulty:", Assets.menuSkin, "song_style_result_values");
+    private Label overallDifficultyConfigLabel;
     private Label accuracyLabel = new Label("Avg. Accuracy:", Assets.menuSkin, "song_style_result_values");
     private Label accuracyResultLabel;
     private Label normalizedAccuracyLabel = new Label("% Accuracy:", Assets.menuSkin, "song_style_result_values");
@@ -63,7 +66,8 @@ public class ResultsScreen implements Screen {
         table.setFillParent(true);
 
         difficultyLabel = new Label(Assets.selectedBeatmap.metadata.difficulty == null ? Assets.selectedBeatmap.metadata.difficulty + "*" : Assets.selectedBeatmap.metadata.difficultyName, Assets.menuSkin, "song_style_result_values");
-        approachRateConfigLabel = new Label("AR-" + GlobalConfiguration.noteSpeed, Assets.menuSkin, "song_style_result_values");
+        approachRateConfigLabel = new Label("AR-" + GlobalConfiguration.noteSpeed + " (" + SongUtils.getSpeedFromConfig(GlobalConfiguration.noteSpeed) + " ms)", Assets.menuSkin, "song_style_result_values");
+        overallDifficultyConfigLabel = new Label("OD-" + GlobalConfiguration.overallDifficulty + " (" + SongUtils.overallDiffBad[GlobalConfiguration.overallDifficulty] + " ms)", Assets.menuSkin, "song_style_result_values");
         accuracyResultLabel = new Label(String.format("%.2f", Results.accuracy * 1000) + " ms.", Assets.menuSkin, "song_style_result_values");
         accuracyRangeResultLabel = new Label(String.format("%.2f", Results.minAccuracy * 1000) + " ms. to " + String.format("%.2f", Results.maxAccuracy * 1000) + " ms.", Assets.menuSkin, "song_style_result_values");
         normalizedAccuracyResultLabel = new Label(String.format("%.2f", Results.normalizedAccuracy * 100f) + "%", Assets.menuSkin, "song_style_result_values");
@@ -77,6 +81,7 @@ public class ResultsScreen implements Screen {
 
         difficulty.setFontScale(fontScale);
         approachRateConfigLabel.setFontScale(fontScale);
+        overallDifficultyConfigLabel.setFontScale(fontScale);
         accuracyResultLabel.setFontScale(fontScale);
         accuracyRangeResultLabel.setFontScale(fontScale);
         normalizedAccuracyResultLabel.setFontScale(fontScale);
@@ -90,6 +95,7 @@ public class ResultsScreen implements Screen {
 
         difficultyLabel.setFontScale(fontScale);
         approachRateLabel.setFontScale(fontScale);
+        overallDifficultyLabel.setFontScale(fontScale);
         accuracyLabel.setFontScale(fontScale);
         accuracyRangeLabel.setFontScale(fontScale);
         normalizedAccuracyLabel.setFontScale(fontScale);
@@ -117,6 +123,9 @@ public class ResultsScreen implements Screen {
         table.add(approachRateLabel).fillX();
         table.add().width(stage.getWidth() * 0.2f);
         table.add(approachRateConfigLabel).fillX().row();
+        table.add(overallDifficultyLabel).fillX();
+        table.add().width(stage.getWidth() * 0.2f);
+        table.add(overallDifficultyConfigLabel).fillX().row();
         table.add(normalizedAccuracyLabel).fillX();
         table.add().width(stage.getWidth() * 0.2f);
         table.add(normalizedAccuracyResultLabel).fillX().row();

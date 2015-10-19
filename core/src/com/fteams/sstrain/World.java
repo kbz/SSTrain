@@ -83,9 +83,9 @@ public class World {
             if (current.note.nextNoteId == 0)
                 continue;
 
-            current.nextNote = circles.get(current.note.nextNoteId.intValue() - 1);
+            current.setNextNote(circles.get(current.note.nextNoteId.intValue() - 1));
             // 2 side relation
-            current.nextNote.previousNote = current;
+            current.nextNote.setPreviousNote(current);
         }
     }
 

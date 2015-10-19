@@ -12,6 +12,7 @@ public class GlobalConfiguration {
     public static int offset;
     public static int inputOffset;
     public static int noteSpeed;
+    public static int overallDifficulty;
     // path to beatmaps
     public static String pathToBeatmaps;
     public static boolean playHintSounds;
@@ -34,6 +35,7 @@ public class GlobalConfiguration {
         pathToBeatmaps = prefs.getString("path_to_beatmaps", Gdx.files.getExternalStoragePath() + "sstrain");
         playHintSounds = prefs.getBoolean("play_hint_sounds", false);
         noteSpeed = prefs.getInteger("note_speed", 6);
+        overallDifficulty = prefs.getInteger("overall_difficulty", 7);
         // default to song name sorting
         sortMode = prefs.getInteger("sorting_mode", SongUtils.SORTING_MODE_SONG_NAME);
         // default ascending order
@@ -52,6 +54,7 @@ public class GlobalConfiguration {
         prefs.putString("path_to_beatmaps", pathToBeatmaps);
         prefs.putBoolean("play_hint_sounds", playHintSounds);
         prefs.putInteger("note_speed", noteSpeed);
+        prefs.putInteger("overall_difficulty", overallDifficulty);
         prefs.putInteger("sorting_mode", sortMode);
         prefs.putInteger("sorting_order", sortOrder);
         prefs.putInteger("sync_mode", syncMode);

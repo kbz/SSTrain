@@ -542,7 +542,7 @@ public class WorldController implements Music.OnCompletionListener {
         if (done && !hasMusic) {
             this.onCompletion(null);
         }
-        if (time > Assets.selectedBeatmap.metadata.duration) {
+        if (time > Assets.selectedBeatmap.metadata.duration  + world.delay) {
             if (!hasMusic)
                 this.onCompletion(null);
         }
