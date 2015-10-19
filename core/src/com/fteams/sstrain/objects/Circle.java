@@ -207,6 +207,7 @@ public class Circle implements Comparable<Circle> {
             miss = true;
             visible = false;
             previousNote.release();
+            waiting = false;
             // only type 2 can gain from a release.
             // type 1 with status calls release on swipe
             return accuracy;
@@ -246,7 +247,9 @@ public class Circle implements Comparable<Circle> {
         }
 
         if (previousNote != null && previousNote.previousNote != null) {
+            System.out.println(">" + note.id + " " + previousNote.isDone());
             if (previousNote.previousNote.note.status.equals(note.status) && !previousNote.isDone()) {
+                System.out.println(">" + note.id + " " + previousNote.isDone());
                 return Accuracy.NONE;
             }
         }
@@ -301,8 +304,7 @@ public class Circle implements Comparable<Circle> {
         if (o == null)
             return 1;
         // if the notes have the same timing, sort them by destination
-        if (0 == Double.compare(note.timing, o.note.timing))
-        {
+        if (0 == Double.compare(note.timing, o.note.timing)) {
             return Long.compare(destination, o.destination);
         }
 

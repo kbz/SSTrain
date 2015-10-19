@@ -578,7 +578,7 @@ public class WorldController implements Music.OnCompletionListener {
 
         for (TapZone zone : tapZones) {
             float x = zone.getPosition().x;
-            if (x - 2 * circleRadius < relativeX && relativeX < x + 2 * circleRadius && relativeY < -125) {
+            if (x - circleRadius < relativeX && relativeX < x + circleRadius && relativeY < -125) {
                 return zone;
             }
         }
@@ -607,24 +607,15 @@ public class WorldController implements Music.OnCompletionListener {
         // new coords
         TapZone matched2 = getTapZoneForCoordinatesNoMarking(screenX, screenY, ppuX, ppuY, width, height, pointer);
 
-        if (!matched.equals(matched2)) {
+        if (matched.equals(matched2)) {
             coords.x = screenX;
             coords.y = screenY;
             return;
         }
 
-        float centerX = world.offsetX + width / 2;
-
-        float relativeBeforeX = (coords.x - centerX) / ppuX;
-        float relativeAfterX = (screenX - centerX) / ppuX;
-
-        float circleRadius = 400 * 0.065f;
-        float x1 = matched.getPosition().x + circleRadius * 0.5f;
-        float x2 = matched.getPosition().x - circleRadius * 0.5f;
-
-        if (relativeBeforeX < x1 && x1 <= relativeAfterX) {
+        if (coords.x < screenX) {
             swipeRight(matched.getId());
-        } else if (relativeBeforeX > x2 && x2 > relativeAfterX) {
+        } else if (coords.x > screenX ) {
             swipeLeft(matched.getId());
         }
         // else do nothing since we're swiping the same side
@@ -637,6 +628,11 @@ public class WorldController implements Music.OnCompletionListener {
         for (Circle mark : circles) {
             if (!mark.waiting) {
                 continue;
+            }
+            if (mark.destination == matchedId && mark.note.status.equals(SongUtils.NOTE_NO_SWIPE))
+            {
+                // we know the notes are in time order so, if the previous note was a tap and wasn't tapped, we ignore the swipe.
+                break;
             }
             if (mark.note.status.equals(SongUtils.NOTE_SWIPE_LEFT)) {
                 if (mark.destination == (matchedId)) {
@@ -662,6 +658,11 @@ public class WorldController implements Music.OnCompletionListener {
         for (Circle mark : circles) {
             if (!mark.waiting) {
                 continue;
+            }
+            if (mark.destination == matchedId && mark.note.status.equals(SongUtils.NOTE_NO_SWIPE))
+            {
+                // we know the notes are in time order so, if the previous note was a tap and wasn't tapped, we ignore the swipe.
+                break;
             }
             if (mark.note.status.equals(SongUtils.NOTE_SWIPE_RIGHT)) {
                 if (mark.destination == (matchedId)) {
