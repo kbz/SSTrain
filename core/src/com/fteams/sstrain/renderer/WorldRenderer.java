@@ -175,7 +175,7 @@ public class WorldRenderer {
         float bad = (float)(SongUtils.overallDiffBad[GlobalConfiguration.overallDifficulty ] * 1f);
         float nice = (float)(SongUtils.overallDiffNice[GlobalConfiguration.overallDifficulty ] * 1f);
         float great = (float)(SongUtils.overallDiffGreat[GlobalConfiguration.overallDifficulty ] * 1f);
-        float perfect = (float)(SongUtils.overallDiffPerf[GlobalConfiguration.overallDifficulty ] * 1f);
+        float perfect = (float)(SongUtils.overallDiffPerfect[GlobalConfiguration.overallDifficulty ] * 1f);
         float zone = bad/1000f;
         // draw the background (bad level)
         spriteBatch.draw(accBadBackground, centerX - width / 6f, y, width / 3f, height * 0.01f);

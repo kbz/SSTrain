@@ -6,7 +6,6 @@ import com.fteams.sstrain.util.Accuracy;
 import com.fteams.sstrain.util.SongUtils;
 
 public class Results {
-    public static Integer score;
     public static Integer combo;
     public static float accuracy;
     public static int miss;
@@ -20,7 +19,6 @@ public class Results {
     public static float unstableRating;
 
     public static void clear() {
-        score = 0;
         combo = 0;
         accuracy = 0;
         miss = 0;
@@ -53,7 +51,7 @@ public class Results {
 
     public static Accuracy getAccuracyFor(float timing) {
         // Perfect
-        if (Math.abs(timing) < SongUtils.overallDiffPerf[GlobalConfiguration.overallDifficulty] / 1000) {
+        if (Math.abs(timing) < SongUtils.overallDiffPerfect[GlobalConfiguration.overallDifficulty] / 1000) {
             return Accuracy.PERFECT;
         }
         if (Math.abs(timing) < SongUtils.overallDiffGreat[GlobalConfiguration.overallDifficulty]/ 1000) {
@@ -70,21 +68,8 @@ public class Results {
 
     // holds and swipes have bigger windows
     public static Accuracy getAccuracyForSwipesAndHolds(float timing) {
-        // Perfect
-//        float zone = SongUtils.getSpeedFromConfig(GlobalConfiguration.noteSpeed) / 1000f;
-//        if (Math.abs(timing) < zone * 0.25f) {
-//            return Accuracy.PERFECT;
-//        }
-//        if (Math.abs(timing) < zone * 0.3f) {
-//            return Accuracy.GREAT;
-//        }
-//        if (Math.abs(timing) < zone * 0.35f) {
-//            return Accuracy.NICE;
-//        }
-//        if (Math.abs(timing) < zone * 0.5f) {
-//            return Accuracy.BAD;
-//        }
         return getAccuracyFor(timing * SWIPE_HOLD_MULTIPLIER);
     }
+
     public final static float SWIPE_HOLD_MULTIPLIER = 0.5f;
 }
