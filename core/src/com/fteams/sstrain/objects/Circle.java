@@ -263,9 +263,7 @@ public class Circle implements Comparable<Circle> {
         }
 
         if (previousNote != null && previousNote.previousNote != null) {
-            System.out.println(">" + note.id + " " + previousNote.isDone());
             if (previousNote.previousNote.note.status.equals(note.status) && !previousNote.isDone()) {
-                System.out.println(">" + note.id + " " + previousNote.isDone());
                 return Accuracy.NONE;
             }
         }
