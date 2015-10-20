@@ -612,8 +612,9 @@ public class WorldController implements Music.OnCompletionListener {
             if (!mark.waiting) {
                 continue;
             }
-            if (mark.destination == matchedId && mark.note.status.equals(SongUtils.NOTE_NO_SWIPE)) {
+            if (mark.destination == matchedId && (mark.note.status.equals(SongUtils.NOTE_NO_SWIPE)|| mark.note.status.equals(SongUtils.NOTE_SWIPE_RIGHT))) {
                 // we know the notes are in time order so, if the previous note was a tap and wasn't tapped, we ignore the swipe.
+                // or there's a swipe in the other direction on the same lane
                 break;
             }
             if (mark.note.status.equals(SongUtils.NOTE_SWIPE_LEFT)) {
@@ -641,8 +642,9 @@ public class WorldController implements Music.OnCompletionListener {
             if (!mark.waiting) {
                 continue;
             }
-            if (mark.destination == matchedId && mark.note.status.equals(SongUtils.NOTE_NO_SWIPE)) {
+            if (mark.destination == matchedId && (mark.note.status.equals(SongUtils.NOTE_NO_SWIPE) || mark.note.status.equals(SongUtils.NOTE_SWIPE_LEFT))) {
                 // we know the notes are in time order so, if the previous note was a tap and wasn't tapped, we ignore the swipe.
+                // or there's a swipe in the other direction on the same lane
                 break;
             }
             if (mark.note.status.equals(SongUtils.NOTE_SWIPE_RIGHT)) {
