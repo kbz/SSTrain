@@ -2,7 +2,7 @@ package com.fteams.sstrain.objects;
 
 import com.badlogic.gdx.math.Vector2;
 
-public class TapZone {
+public class TapZone implements Comparable<TapZone>{
 
     Integer id;
 
@@ -30,5 +30,10 @@ public class TapZone {
 
     public Vector2 getPosition() {
         return position;
+    }
+
+    @Override
+    public int compareTo(TapZone o) {
+        return Integer.compare(id, o.id);
     }
 }

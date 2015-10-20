@@ -72,6 +72,7 @@ public class World {
             TapZone zone = new TapZone(x, -249.0f, zoneId++);
             tapZones.add(zone);
         }
+        tapZones.sort();
         this.accuracyMarkers = new Array<>();
         this.accuracyPopups = new Array<>();
         paused = false;
