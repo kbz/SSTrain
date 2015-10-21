@@ -301,7 +301,7 @@ public class WorldRenderer {
             else
                 spriteBatch.setColor(c.r, c.g, c.b, alpha * alpha * 1f * 0.45f);
 
-            if (mark.nextNote != null) {
+            if (mark.nextNote != null && !mark.nextNote.isDone()) {
                 Vector2 org = mark.nextNote.position.cpy();
                 org.x *= ppuX;
                 org.y *= ppuY;
