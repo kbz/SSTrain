@@ -6,6 +6,9 @@ import com.fteams.sstrain.util.SongUtils;
 
 public class GlobalConfiguration {
 
+    // package info
+    public static String appVersionName;
+
     public static int songVolume;
     public static int feedbackVolume;
     // offset in milliseconds
