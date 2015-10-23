@@ -224,7 +224,8 @@ public class Circle implements Comparable<Circle> {
     public Accuracy release() {
 //        System.out.println("R>" + note.id);
         // if a non-hold is released it it counts as a miss.
-        if (!hold || !note.status.equals(SongUtils.NOTE_NO_SWIPE)) {
+        // some songs have notes with type 1 and status != 0 for release so we check if the previous note was a hold
+        if (previousNote != null && previousNote.hold && !note.status.equals(SongUtils.NOTE_NO_SWIPE)) {
             accuracy = Accuracy.MISS;
             miss = true;
             visible = false;
