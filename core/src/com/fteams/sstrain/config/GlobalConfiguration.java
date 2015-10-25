@@ -28,6 +28,12 @@ public class GlobalConfiguration {
 
     public final static int BASE_HEIGHT = 720;
 
+    // not stored/remembered variables:
+    public static Float playbackRate;
+    public static Integer playbackMode;
+    public static Float aTime;
+    public static Float bTime;
+
 
     public static void loadConfiguration() {
         Preferences prefs = Gdx.app.getPreferences("ss_train_config");

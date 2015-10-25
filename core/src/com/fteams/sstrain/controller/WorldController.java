@@ -47,10 +47,12 @@ public class WorldController implements Music.OnCompletionListener {
     Map<Integer, Integer> pointerToZoneId = new HashMap<>();
     Map<Integer, Vector2> pointerToCoordinates = new HashMap<>();
 
-    float songPosition;
+    Float aPosition;
+    Float bPosition;
 
     float songStart;
     boolean songStarted;
+    boolean isABRepeatMode;
 
     private Music theSong;
     private Integer syncMode;
@@ -69,22 +71,75 @@ public class WorldController implements Music.OnCompletionListener {
         this.largestCombo = 0;
         this.accuracyList = new ArrayList<>();
         this.accuracyPopups = world.getAccuracyPopups();
-        this.acted = false;
         this.songStart = world.delay;
         this.songStarted = false;
-        this.songPosition = 0f;
         this.mtime = 0f;
         this.lastmtime = 0f;
         this.time = 0f;
         this.oldTime = 0f;
-        theSong = SongLoader.loadSongFile();
-        this.hasMusic = theSong != null;
         this.timeSyncAcc = 0f;
         this.syncMode = GlobalConfiguration.syncMode;
+        this.isABRepeatMode = GlobalConfiguration.playbackMode != null && GlobalConfiguration.playbackMode.equals(SongUtils.GAME_MODE_ABREPEAT);
+
+        if (GlobalConfiguration.playbackRate == null || GlobalConfiguration.playbackRate.compareTo(1.0f) == 0) {
+            theSong = SongLoader.loadSongFile();
+        }
+        if (isABRepeatMode) {
+            aPosition = GlobalConfiguration.aTime;
+            // set a buffer of 3 seconds previous to the fragment we're practicing
+            aPosition = aPosition - 3f < 0.0f ? 0.0f : aPosition - 3f;
+            bPosition = GlobalConfiguration.bTime;
+            if (GlobalConfiguration.playbackRate != null && GlobalConfiguration.playbackRate.compareTo(1.0f) != 0)
+                aPosition = aPosition / GlobalConfiguration.playbackRate;
+            if (GlobalConfiguration.playbackRate != null && GlobalConfiguration.playbackRate.compareTo(1.0f) != 0)
+                bPosition = bPosition / GlobalConfiguration.playbackRate;
+
+            time = aPosition;
+        }
+        this.hasMusic = theSong != null;
     }
+
+    private void resetMarks() {
+        for (Circle circle : circles) {
+            circle.accuracy = null;
+            circle.visible = false;
+            circle.holding = false;
+            circle.soundPlayed = false;
+            circle.miss = false;
+            circle.processed = false;
+            circle.position.y = 0f;
+            circle.alpha = 1;
+        }
+        this.combo = 0;
+        this.badCount = 0;
+        this.goodCount = 0;
+        this.greatCount = 0;
+        this.perfectCount = 0;
+        this.missCount = 0;
+        this.largestCombo = 0;
+        this.timeSyncAcc = 0f;
+        accuracyMarkers.clear();
+        accuracyPopups.clear();
+    }
+
 
     @Override
     public void onCompletion(Music music) {
+        if (isABRepeatMode && !done) {
+            resetMarks();
+            if (hasMusic) {
+                theSong.pause();
+                theSong.setPosition(aPosition);
+                theSong.play();
+                lastmtime = theSong.getPosition();
+                time = lastmtime + world.delay;
+                timeSyncAcc = 0;
+            } else {
+                time = aPosition;
+            }
+            return;
+
+        }
         if (hasMusic) {
             music.dispose();
         }
@@ -142,9 +197,17 @@ public class WorldController implements Music.OnCompletionListener {
                     theSong.setOnCompletionListener(this);
                     theSong.setVolume(GlobalConfiguration.songVolume / 100f);
                     theSong.play();
+                    if (aPosition != null)
+                        theSong.setPosition(aPosition);
                     lastmtime = theSong.getPosition();
                     time = lastmtime + world.delay;
                     timeSyncAcc = 0;
+                } else {
+                    if (aPosition != null) {
+                        lastmtime = aPosition;
+                        time = lastmtime + world.delay;
+                        timeSyncAcc = 0;
+                    }
                 }
             }
         }
@@ -289,7 +352,6 @@ public class WorldController implements Music.OnCompletionListener {
         return (float) Math.sqrt(sum / (values.size - 1));
     }
 
-    public boolean acted;
 
     private void processAccuracy(Accuracy accuracy, Accuracy accuracy2, boolean isHold) {
         if (!isHold) {
@@ -420,11 +482,6 @@ public class WorldController implements Music.OnCompletionListener {
     private void playMusicOnDemand() {
         if (!world.started) {
             world.started = true;
-            if (hasMusic) {
-                theSong.setLooping(false);
-                theSong.setOnCompletionListener(this);
-                theSong.setVolume(GlobalConfiguration.songVolume / 100f);
-            }
         } else {
             if (world.paused) {
                 world.paused = false;
@@ -539,10 +596,23 @@ public class WorldController implements Music.OnCompletionListener {
                 }
             }
         }
+        if (isABRepeatMode) {
+            if (time + world.delay >= bPosition) {
+                resetMarks();
+                if (hasMusic) {
+                    theSong.pause();
+                    theSong.setPosition(aPosition);
+                    theSong.play();
+                    lastmtime = theSong.getPosition();
+                    time = lastmtime + world.delay;
+                    timeSyncAcc = 0;
+                }
+            }
+        }
         if (done && !hasMusic) {
             this.onCompletion(null);
         }
-        if (time > Assets.selectedBeatmap.metadata.duration + world.delay) {
+        if (time > Assets.selectedBeatmap.metadata.duration / (GlobalConfiguration.playbackRate == null ? 1.0f : GlobalConfiguration.playbackRate) + world.delay) {
             if (!hasMusic)
                 this.onCompletion(null);
         }
@@ -552,6 +622,7 @@ public class WorldController implements Music.OnCompletionListener {
         if (world.started) {
             // if the game was paused and we pressed back again, we skip to the results screen
             if (world.paused) {
+                this.done = true;
                 this.onCompletion(theSong);
                 return;
             }
@@ -612,7 +683,7 @@ public class WorldController implements Music.OnCompletionListener {
             if (!mark.waiting) {
                 continue;
             }
-            if (mark.destination == matchedId && (mark.note.status.equals(SongUtils.NOTE_NO_SWIPE)|| mark.note.status.equals(SongUtils.NOTE_SWIPE_RIGHT))) {
+            if (mark.destination == matchedId && (mark.note.status.equals(SongUtils.NOTE_NO_SWIPE) || mark.note.status.equals(SongUtils.NOTE_SWIPE_RIGHT))) {
                 // we know the notes are in time order so, if the previous note was a tap and wasn't tapped, we ignore the swipe.
                 // or there's a swipe in the other direction on the same lane
                 break;

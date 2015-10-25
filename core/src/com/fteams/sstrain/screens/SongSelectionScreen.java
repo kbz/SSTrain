@@ -149,7 +149,7 @@ public class SongSelectionScreen implements Screen, InputProcessor {
                 }
                 stopPreviewSong();
                 Assets.selectedBeatmap = diffList.getSelected();
-                 ((Game) Gdx.app.getApplicationListener()).setScreen(new SongScreen());
+                 ((Game) Gdx.app.getApplicationListener()).setScreen(new LiveOptionsScreen());
             }
         }));
         table.add(backButton).size(stage.getWidth() * 0.87f / 2, stage.getHeight() * 0.12f);

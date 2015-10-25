@@ -22,6 +22,7 @@ public class Circle implements Comparable<Circle> {
     Double speed;
     public Circle nextNote;
     public Circle previousNote;
+    public Circle nextSyncNote;
 
     float spawnTime;
     float despawnTime;

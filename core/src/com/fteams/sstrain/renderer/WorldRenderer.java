@@ -197,7 +197,7 @@ public class WorldRenderer {
     }
 
     private void drawTapToBeginMessage() {
-        String tapToBegin = "Tap to begin!";
+        String tapToBegin = "Tap to begin!" + (GlobalConfiguration.playbackMode != null && GlobalConfiguration.playbackMode.equals(SongUtils.GAME_MODE_ABREPEAT) ? " To exit in A-B Repeat Mode, tap back twice.": "");
         float centerX = this.positionOffsetX + width / 2;
         float centerY = this.positionOffsetY + height / 2 + height * 0.15f;
         layout.setText(songFont, tapToBegin);
@@ -321,14 +321,10 @@ public class WorldRenderer {
             }
 
             if (!mark.note.sync.equals(0L)) {
-                Circle mark2 = world.getCircles().get(mark.note.id.intValue() - 1);
+                Circle mark2 = mark.nextSyncNote;
                 // we only check ahead if we  got the same note, we don't want overlapping beams
-                if (mark.equals(mark2) && mark.note.id < world.getCircles().size)
-                {
-                    mark2 = world.getCircles().get(mark.note.id.intValue());
-                }
                 // draw beams only if neither note has been ever hit
-                if (mark2.note.timing.equals(mark.note.timing) && mark.accuracy == null && mark2.accuracy == null) {
+                if (mark2 != null && mark.accuracy == null && mark2.accuracy == null) {
                     Vector2 org = mark2.position.cpy();
                     org.x *= ppuX;
                     org.y *= ppuY;
@@ -395,7 +391,6 @@ public class WorldRenderer {
             } else if (note.status.equals(SongUtils.NOTE_SWIPE_RIGHT)) {
                 return circleSwipeRightSim;
             }
-            // TODO: Notes in sync (simultaneous) are linked by a horizontal beam.
         } else if (note.sync.intValue() == SongUtils.NOTE_SYNC_OFF) {
             if (note.status.equals(SongUtils.NOTE_NO_SWIPE)) {
                 return circle;
