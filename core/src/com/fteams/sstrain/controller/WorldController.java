@@ -57,6 +57,8 @@ public class WorldController implements Music.OnCompletionListener {
     private Music theSong;
     private Integer syncMode;
 
+    private boolean rewinding;
+
     public WorldController(World world) {
         this.world = world;
         this.circles = world.getCircles();
@@ -97,9 +99,11 @@ public class WorldController implements Music.OnCompletionListener {
             time = aPosition;
         }
         this.hasMusic = theSong != null;
+        this.rewinding = false;
     }
 
     private void resetMarks() {
+        this.rewinding = true;
         for (Circle circle : circles) {
             circle.accuracy = null;
             circle.visible = false;
@@ -120,6 +124,7 @@ public class WorldController implements Music.OnCompletionListener {
         this.timeSyncAcc = 0f;
         accuracyMarkers.clear();
         accuracyPopups.clear();
+        this.rewinding = false;
     }
 
 
@@ -184,6 +189,9 @@ public class WorldController implements Music.OnCompletionListener {
             return;
 
         if (world.paused)
+            return;
+
+        if (rewinding)
             return;
 
         // some song files may start immediately and the beatmaps may have notes which start immediately with the songs
