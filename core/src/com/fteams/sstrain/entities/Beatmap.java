@@ -17,6 +17,6 @@ public class Beatmap implements Comparable<Beatmap>{
 
     public String toString()
     {
-        return metadata.songName.replaceAll("\\\\n", " ") + (metadata.difficultyName == null ? "[" + metadata.difficulty + "*]" : "["+metadata.difficultyName+"]");
+        return (metadata.difficultyName == null ? "" + metadata.difficulty + "*" : ""+metadata.difficultyName+"");
     }
 }

@@ -208,6 +208,11 @@ public class LiveOptionsScreen extends ChangeListener implements Screen, InputPr
     @Override
     public boolean keyUp(int keycode) {
         if (keycode == Input.Keys.BACK || keycode == Input.Keys.ESCAPE) {
+            if (theSong != null)
+            {
+                theSong.stop();
+                theSong.dispose();
+            }
             ((Game) Gdx.app.getApplicationListener()).setScreen(new SongSelectionScreen());
             // do nothing
             return true;
