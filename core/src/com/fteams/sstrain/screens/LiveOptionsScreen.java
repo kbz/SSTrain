@@ -67,16 +67,22 @@ public class LiveOptionsScreen extends ChangeListener implements Screen, InputPr
         backButton.addListener((new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                theSong.stop();
-                theSong.dispose();
+                if (theSong != null)
+                {
+                    theSong.stop();
+                    theSong.dispose();
+                }
                 ((Game) Gdx.app.getApplicationListener()).setScreen(new SongSelectionScreen());
             }
         }));
         nextButton.addListener((new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                theSong.stop();
-                theSong.dispose();
+                if (theSong != null)
+                {
+                    theSong.stop();
+                    theSong.dispose();
+                }
                 ((Game) Gdx.app.getApplicationListener()).setScreen(new SongScreen());
             }
         }));
