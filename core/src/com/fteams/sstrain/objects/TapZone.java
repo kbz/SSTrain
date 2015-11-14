@@ -1,6 +1,7 @@
 package com.fteams.sstrain.objects;
 
 import com.badlogic.gdx.math.Vector2;
+import com.fteams.sstrain.util.SongUtils;
 
 public class TapZone implements Comparable<TapZone>{
 
@@ -34,6 +35,6 @@ public class TapZone implements Comparable<TapZone>{
 
     @Override
     public int compareTo(TapZone o) {
-        return Integer.compare(id, o.id);
+        return SongUtils.compare(id, o.id);
     }
 }

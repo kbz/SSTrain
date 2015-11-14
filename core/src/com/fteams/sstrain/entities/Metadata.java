@@ -1,5 +1,7 @@
 package com.fteams.sstrain.entities;
 
+import com.fteams.sstrain.util.SongUtils;
+
 public class Metadata extends BaseMetadata{
     public String difficultyName;
     public Long difficulty;
@@ -11,7 +13,7 @@ public class Metadata extends BaseMetadata{
             {
                 return difficultyName.compareTo(metadata.difficultyName);
             }
-            else return Long.compare(difficulty, metadata.difficulty);
+            else return SongUtils.compare(difficulty, metadata.difficulty);
         }
         return songName.compareTo(metadata.songName);
     }

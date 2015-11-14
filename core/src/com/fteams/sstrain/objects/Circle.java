@@ -333,7 +333,7 @@ public class Circle implements Comparable<Circle> {
             return 1;
         // if the notes have the same timing, sort them by destination
         if (note.timing.equals(o.note.timing)) {
-            return Long.compare(note.endPos, o.note.endPos);
+            return SongUtils.compare(note.endPos, o.note.endPos);
         }
 
         return Double.compare(note.timing, o.note.timing);
