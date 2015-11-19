@@ -24,8 +24,6 @@ import com.fteams.sstrain.objects.TapZone;
 import com.fteams.sstrain.util.Accuracy;
 import com.fteams.sstrain.util.SongUtils;
 
-import jdk.nashorn.internal.objects.Global;
-
 public class WorldRenderer {
 
     private static final float CAMERA_WIDTH = 600f;
@@ -147,8 +145,7 @@ public class WorldRenderer {
         renderer.begin(ShapeRenderer.ShapeType.Line);
         drawTapZones();
         drawCircles();
-        if (GlobalConfiguration.displayLine)
-        {
+        if (GlobalConfiguration.displayLine) {
             drawFlatBar();
         }
         drawCombo();
@@ -202,7 +199,7 @@ public class WorldRenderer {
     }
 
     private void drawTapToBeginMessage() {
-        String tapToBegin = "Tap to begin!" + (GlobalConfiguration.playbackMode != null && GlobalConfiguration.playbackMode.equals(SongUtils.GAME_MODE_ABREPEAT) ? " To exit in A-B Repeat Mode, tap back twice.": "");
+        String tapToBegin = "Tap to begin!" + (GlobalConfiguration.playbackMode != null && GlobalConfiguration.playbackMode.equals(SongUtils.GAME_MODE_ABREPEAT) ? " To exit in A-B Repeat Mode, tap back twice." : "");
         float centerX = this.positionOffsetX + width / 2;
         float centerY = this.positionOffsetY + height / 2 + height * 0.15f;
         layout.setText(songFont, tapToBegin);
