@@ -66,6 +66,7 @@ public class SettingsScreen extends ChangeListener implements Screen, InputProce
     private CheckBox syncModeCheckbox;
     private CheckBox sortingModeChooser;
     private CheckBox sortingOrderChooser;
+    private CheckBox displayLineChooser;
 
     private String[] sortingModes = {"File Name", "Song Name", "Song Id", "Attribute", "Duration"};
     private String[] sortingOrders = {"Ascending", "Descending"};
@@ -87,6 +88,7 @@ public class SettingsScreen extends ChangeListener implements Screen, InputProce
     private Integer newSyncMode;
     private Integer newNoteSpeed;
     private Integer newOverallDifficulty;
+    private Boolean newDisplayLine;
 
     @Override
     public void show() {
@@ -110,6 +112,7 @@ public class SettingsScreen extends ChangeListener implements Screen, InputProce
         newSortingMode = GlobalConfiguration.sortMode;
         newSortingOrder = GlobalConfiguration.sortOrder;
         newSyncMode = GlobalConfiguration.syncMode;
+        newDisplayLine = GlobalConfiguration.displayLine;
 
         ButtonGroup<TextButton> buttonGroup = new ButtonGroup<>();
         buttonGroup.add(volumeSettingsTabButton);
@@ -286,6 +289,12 @@ public class SettingsScreen extends ChangeListener implements Screen, InputProce
         sortingOrderChooser.getImageCell().width(0);
         sortingOrderChooser.addListener(this);
 
+        displayLineChooser = new CheckBox("Gameplay: Display Bottom Line (" + (GlobalConfiguration.displayLine ? "X" : " ") + ")", Assets.menuSkin);
+        displayLineChooser.getLabel().setFontScale(fontScale);
+        displayLineChooser.getImageCell().width(0);
+        displayLineChooser.setChecked(GlobalConfiguration.displayLine);
+        displayLineChooser.addListener(this);
+
         final Table otherTable = new Table();
 
         otherTable.setHeight(stage.getHeight() * 0.7f);
@@ -295,6 +304,7 @@ public class SettingsScreen extends ChangeListener implements Screen, InputProce
         otherTable.add(pathValueLabel).padTop(stage.getHeight() * 0.01f).padBottom(stage.getHeight() * 0.01f).fillX().left().padLeft(stage.getWidth() * 0.03f).row();
         otherTable.add(sortingModeChooser).padTop(stage.getHeight() * 0.01f).padBottom(stage.getHeight() * 0.01f).left().row();
         otherTable.add(sortingOrderChooser).padTop(stage.getHeight() * 0.01f).padBottom(stage.getHeight() * 0.01f).left().row();
+        otherTable.add(displayLineChooser).padTop(stage.getHeight() * 0.01f).padBottom(stage.getHeight() * 0.01f).left().row();
         otherTable.add().expand().fill().row();
         otherTable.add(reloadBeatmaps).padTop(stage.getHeight() * 0.01f).padBottom(stage.getHeight() * 0.01f).left().row();
 
@@ -344,6 +354,7 @@ public class SettingsScreen extends ChangeListener implements Screen, InputProce
                 GlobalConfiguration.sortMode = newSortingMode;
                 GlobalConfiguration.sortOrder = newSortingOrder;
                 GlobalConfiguration.syncMode = newSyncMode;
+                GlobalConfiguration.displayLine = newDisplayLine;
                 GlobalConfiguration.storeConfiguration();
                 ((Game) Gdx.app.getApplicationListener()).setScreen(new MainMenuScreen());
             }
@@ -414,11 +425,15 @@ public class SettingsScreen extends ChangeListener implements Screen, InputProce
         }
         if (actor == overallDifficultySlider) {
             newOverallDifficulty = (int) ((Slider) actor).getValue();
-            overallDifficultyValueLabel.setText(newOverallDifficulty+ "");
+            overallDifficultyValueLabel.setText(newOverallDifficulty + "");
         }
         if (actor == playHintSoundCheckbox) {
             newHitSoundsSetting = playHintSoundCheckbox.isChecked();
             playHintSoundCheckbox.setText("Hint Sounds (" + (playHintSoundCheckbox.isChecked() ? "X" : " ") + ")");
+        }
+        if (actor == displayLineChooser) {
+            newDisplayLine = displayLineChooser.isChecked();
+            displayLineChooser.setText("Gameplay: Display Bottom Line (" + (displayLineChooser.isChecked() ? "X" : " ") + ")");
         }
         if (actor == sortingModeChooser) {
             newSortingMode = (newSortingMode + 1) % sortingModes.length;

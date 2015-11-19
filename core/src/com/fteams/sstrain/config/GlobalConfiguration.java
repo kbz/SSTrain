@@ -23,6 +23,9 @@ public class GlobalConfiguration {
     // sorting related
     public static int sortMode;
 
+    // display the line in the live screen
+    public static boolean displayLine;
+
     // sync config
     public static int syncMode;
 
@@ -45,6 +48,7 @@ public class GlobalConfiguration {
         playHintSounds = prefs.getBoolean("play_hint_sounds", false);
         noteSpeed = prefs.getInteger("note_speed", 6);
         overallDifficulty = prefs.getInteger("overall_difficulty", 7);
+        displayLine = prefs.getBoolean("display_line", true);
         // default to song name sorting
         sortMode = prefs.getInteger("sorting_mode", SongUtils.SORTING_MODE_SONG_NAME);
         // default ascending order
@@ -64,6 +68,7 @@ public class GlobalConfiguration {
         prefs.putBoolean("play_hint_sounds", playHintSounds);
         prefs.putInteger("note_speed", noteSpeed);
         prefs.putInteger("overall_difficulty", overallDifficulty);
+        prefs.putBoolean("display_line", displayLine);
         prefs.putInteger("sorting_mode", sortMode);
         prefs.putInteger("sorting_order", sortOrder);
         prefs.putInteger("sync_mode", syncMode);

@@ -24,6 +24,8 @@ import com.fteams.sstrain.objects.TapZone;
 import com.fteams.sstrain.util.Accuracy;
 import com.fteams.sstrain.util.SongUtils;
 
+import jdk.nashorn.internal.objects.Global;
+
 public class WorldRenderer {
 
     private static final float CAMERA_WIDTH = 600f;
@@ -145,7 +147,10 @@ public class WorldRenderer {
         renderer.begin(ShapeRenderer.ShapeType.Line);
         drawTapZones();
         drawCircles();
-        drawFlatBar();
+        if (GlobalConfiguration.displayLine)
+        {
+            drawFlatBar();
+        }
         drawCombo();
         //drawProgressBar();
         drawAccuracyBar();
